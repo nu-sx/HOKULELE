@@ -1,0 +1,79 @@
+{
+  "format": 1,
+  "title": "合成流星スペクトル",
+  "title_en": "Synthetic meteor spectrum",
+  "description": "Na I D (589 nm) と Mg I b (517 nm) の輝線を持つ合成流星動画 (960x480, 60フレーム) を使って、分光解析の手順を順番に実演します。「次へ」で1ステップずつ、「最後まで自動実行」で通しで進みます。",
+  "description_en": "Demonstrates the spectral analysis step by step with a synthetic meteor movie (960x480, 60 frames) showing the Na I D (589 nm) and Mg I b (517 nm) emission lines. \"Next\" runs one step; \"Run all\" runs to the end.",
+  "video": "sample_synthetic_meteor.avi",
+  "files": [
+    {
+      "name": "sample_synthetic_meteor.avi",
+      "size": 966150,
+      "sha256": "6bc8acd6902f7b41f98c3d82d2b2015ac79b21090f245dc3a466b01bd4534b25"
+    }
+  ],
+  "params": {
+    "grayscale": false,
+    "rotate90": false,
+    "frame_range": [
+      10,
+      49
+    ],
+    "gamma_index": 0,
+    "dark_range": [
+      0,
+      8
+    ],
+    "fov_deg": 60,
+    "tilt_points": [
+      [
+        373.24,
+        110
+      ],
+      [
+        464.04,
+        150
+      ],
+      [
+        554.84,
+        190
+      ],
+      [
+        645.64,
+        230
+      ]
+    ],
+    "band_points": [
+      [
+        480,
+        85
+      ],
+      [
+        480,
+        258
+      ]
+    ],
+    "sample_step": 2,
+    "wavecal_pairs": [
+      [
+        506.0,
+        517.27
+      ],
+      [
+        546.0,
+        589.16
+      ]
+    ],
+    "zero_init": [
+      60,
+      98
+    ],
+    "sens_mode": "none",
+    "follow_zero": true,
+    "filters": [
+      "B",
+      "V",
+      "R"
+    ]
+  }
+}
