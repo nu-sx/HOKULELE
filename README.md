@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/hokulele_icon.png" alt="Hokulele icon" width="200"></p>
+
 # Hokulele
 
 流星動画分光解析ソフトウェア **Hokulele** の配布ページです。
