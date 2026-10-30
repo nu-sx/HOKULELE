@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="logo.png" alt="HOKULELE ホクレレ — Meteor Video Spectroscopy Analyzer" width="820">
+  <img src="logo.png" alt="HOKULELE (Hōkūlele) — Meteor Video Spectroscopy Analyzer" width="820">
 </p>
 
 # Hokulele
 
-流星動画分光解析ソフトウェア **Hokulele** の配布ページです。
-This is the download page of **Hokulele**, a meteor spectroscopy analysis software for meteor videos.
+流星動画分光解析ソフトウェア **Hokulele** の配布ページです。名前の Hōkūlele はハワイ語で「流れ星」を意味します。
+This is the download page of **Hokulele**, a meteor spectroscopy analysis software for meteor videos. Hōkūlele means "shooting star" in Hawaiian.
 [English](#english)
 
 ## ダウンロード
