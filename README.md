@@ -1,4 +1,6 @@
-<p align="center"><img src="docs/hokulele_icon.png" alt="Hokulele icon" width="200"></p>
+<p align="center">
+  <img src="logo.png" alt="HOKULELE ホクレレ — Meteor Video Spectroscopy Analyzer" width="820">
+</p>
 
 # Hokulele
 
@@ -8,7 +10,7 @@ This is the download page of **Hokulele**, a meteor spectroscopy analysis softwa
 
 ## ダウンロード
 
-[Releases](https://github.com/nu-sx/hokulele/releases/latest) から、お使いの OS 用のファイルをダウンロードしてください。
+[Releases](https://github.com/nu-sx/HOKULELE/releases/latest) から、お使いの OS 用のファイルをダウンロードしてください。
 
 | OS | ファイル |
 |---|---|
@@ -68,7 +70,7 @@ Hokulele を使った研究成果を発表する際は、次の論文を引用�
 
 ### Download
 
-Download the file for your OS from [Releases](https://github.com/nu-sx/hokulele/releases/latest).
+Download the file for your OS from [Releases](https://github.com/nu-sx/HOKULELE/releases/latest).
 
 | OS | File |
 |---|---|

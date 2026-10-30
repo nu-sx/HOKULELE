@@ -8,7 +8,7 @@
 | `manifest.json` | デモの説明、ファイル一覧 (サイズ・SHA-256)、各ステップの解析パラメータ |
 | `sample_synthetic_meteor.avi` | 合成流星動画 (960x480, 60 フレーム, Na I D / Mg I b 輝線) |
 
-取得先 URL: `https://raw.githubusercontent.com/nu-sx/hokulele/main/demo/`
+取得先 URL: `https://raw.githubusercontent.com/nu-sx/HOKULELE/main/demo/`
 
 ## 更新するとき
 
