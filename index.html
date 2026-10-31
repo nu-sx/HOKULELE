@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hokulele 使用マニュアル</title>
+<meta name="description" content="流星動画分光解析ソフトウェア Hokulele V2.5.1 の使用マニュアル（第8版、2026年10月）。名前の Hōkūlele はハワイ語で「流れ星」を意味します。">
+<link rel="icon" type="image/png" href="docs/hokulele_icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --paper: #f6f8fa; --surface: #ffffff; --ink: #18212b; --muted: #5a6876; --rule: #d9e0e7;
+  --accent: #b8620f; --cool: #1f6fb2; --code-bg: #eef2f6; --head-bg: #131a28;
+  --f-display: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161c; --surface: #18202a; --ink: #e3e9ef; --muted: #9aa8b6; --rule: #2b3642;
+    --accent: #e89a45; --cool: #6aa9e0; --code-bg: #1d2731; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161c; --surface: #18202a; --ink: #e3e9ef; --muted: #9aa8b6; --rule: #2b3642;
+  --accent: #e89a45; --cool: #6aa9e0; --code-bg: #1d2731; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 16px; }
+body { margin: 0; overflow-wrap: anywhere; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.8; }
+header.hero { background: var(--head-bg); padding: 20px 16px; text-align: center; }
+header.hero img { width: 100%; max-width: 820px; height: auto; display: block; margin: 0 auto; }
+.intro { max-width: 1180px; margin: 0 auto; padding: 32px 16px 0 calc(16px + 230px + 48px); }
+.intro > * { max-width: 820px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px;
+        padding: 8px 16px 80px; }
+nav.toc { position: sticky; top: 20px; align-self: start; font-size: 13px; line-height: 1.6;
+          max-height: calc(100vh - 40px); overflow-y: auto; }
+nav.toc .label { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav.toc ol { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 3px; }
+nav.toc ol ol { margin: 3px 0 4px 12px; }
+nav.toc a { color: var(--muted); text-decoration: none; }
+nav.toc li.l1 > a { color: var(--ink); font-weight: 700; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); }
+main { min-width: 0; max-width: 820px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.35; }
+h1.title { font-size: 32px; margin: 0 0 6px; }
+.sub { color: var(--muted); margin: 0 0 12px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+.links a { display: inline-block; padding: 5px 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface);
+           color: var(--cool); text-decoration: none; font-size: 14px; }
+.links a:hover { border-color: var(--cool); }
+.cite { font-size: 13px; color: var(--muted); }
+main h1 { font-size: 24px; margin: 56px 0 10px; padding-top: 14px; border-top: 1px solid var(--rule); }
+main h2 { font-size: 19px; margin: 36px 0 8px; color: var(--cool); }
+main h3 { font-size: 16px; margin: 24px 0 6px; }
+p, li { max-width: 72ch; }
+a { color: var(--cool); }
+figure { margin: 18px 0 14px; }
+figure img { width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 4px; background: #000; display: block; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+code { font-family: var(--f-mono); font-size: .9em; background: var(--code-bg); padding: 1px 5px; border-radius: 3px; }
+pre { font-family: var(--f-mono); font-size: 13px; line-height: 1.6; background: var(--code-bg); padding: 14px 16px;
+      border-radius: 4px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+.tbl { overflow-x: auto; margin: 14px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--surface); }
+th, td { border: 1px solid var(--rule); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--code-bg); }
+td p, th p { margin: 0; }
+blockquote { margin: 14px 0; padding: 8px 14px; border-left: 3px solid var(--accent); background: var(--surface);
+             border-radius: 0 4px 4px 0; }
+blockquote p { margin: 4px 0; }
+footer { color: var(--muted); font-size: 13px; margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--rule); }
+@media (max-width: 860px) {
+  .intro { padding-left: 16px; padding-top: 24px; }
+  h1.title { font-size: 26px; }
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  nav.toc { position: static; max-height: none; border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px;
+            background: var(--surface); }
+}
+</style>
+</head>
+<body id="top">
+<header class="hero"><a href="https://github.com/nu-sx/HOKULELE"><img src="logo.png" alt="HOKULELE (Hōkūlele) — Meteor Video Spectroscopy Analyzer" width="1600" height="400"></a></header>
+<section class="intro">
+<h1 class="title">Hokulele 使用マニュアル</h1>
+<p class="sub">流星動画分光解析ソフトウェア Hokulele V2.5.1 の使用マニュアル（第8版、2026年10月）。名前の Hōkūlele はハワイ語で「流れ星」を意味します。</p>
+<div class="links" aria-label="ダウンロード"><a href="docs/Hokulele_使用マニュアル.pdf">PDF 版</a><a href="docs/Hokulele_使用マニュアル.docx">Word 版</a><a href="https://github.com/nu-sx/HOKULELE/releases/latest">アプリのダウンロード</a><a href="en.html" hreflang="en">English</a></div>
+<p class="cite">論文で使用する場合は、1.4 節の文献を引用し、謝辞に記載してください。</p>
+</section>
+<div class="wrap">
+<nav class="toc" aria-label="目次"><div class="label">目次</div><ol><li class="l1"><a href="#s1">1. 概要</a><ol><li><a href="#s1-1">1.1 主な機能</a></li><li><a href="#s1-2">1.2 V2.5 での変更点</a></li><li><a href="#s1-3">1.3 V2.4 での変更点</a></li><li><a href="#s1-4">1.4 引用と謝辞</a></li></ol></li><li class="l1"><a href="#s2">2. 動作環境とインストール</a><ol><li><a href="#s2-1">2.1 動作環境</a></li><li><a href="#s2-2">2.2 ダウンロード</a></li><li><a href="#s2-3">2.3 Windows へのインストール</a></li><li><a href="#s2-4">2.4 macOS へのインストール</a></li><li><a href="#s2-5">2.5 起動と終了</a></li><li><a href="#s2-6">2.6 表示言語（日本語 / English）</a></li><li><a href="#s2-7">2.7 データの保存先</a></li></ol></li><li class="l1"><a href="#s3">3. 画面構成と基本操作</a><ol><li><a href="#s3-1">3.1 メインウィンドウ</a></li><li><a href="#s3-2">3.2 ルーペ（マウス追従拡大鏡）</a></li><li><a href="#s3-3">3.3 プレビュー再生</a></li><li><a href="#s3-4">3.4 キーボードショートカット</a></li></ol></li><li class="l1"><a href="#s4">4. 解析の流れ（クイックスタート）</a><ol><li><a href="#s4-1">4.1 分光解析デモで手順を体験する</a></li><li><a href="#s4-2">4.2 解析の手順</a></li></ol></li><li class="l1"><a href="#s5">5. 各タブの操作</a><ol><li><a href="#s5-1">5.1 動画タブ</a></li><li><a href="#s5-2">5.2 較正タブ</a></li><li><a href="#s5-3">5.3 波長較正タブ（輝線同定）</a></li><li><a href="#s5-4">5.4 0次像タブ</a></li><li><a href="#s5-5">5.5 1次像タブ（スペクトル / フィルター測光）</a></li><li><a href="#s5-6">5.6 軌道タブ</a></li><li><a href="#s5-7">5.7 出力タブ</a></li></ol></li><li class="l1"><a href="#s6">6. γ補正とカメラ機種対応表</a></li><li class="l1"><a href="#s7">7. 出力ファイル一覧</a><ol><li><a href="#s7-1">7.1 解析結果ログ（analysis_log.txt）</a></li><li><a href="#s7-2">7.2 較正データの互換性</a></li></ol></li><li class="l1"><a href="#s8">8. FAQ・トラブルシューティング</a></li><li class="l1"><a href="#app">付録</a><ol><li><a href="#appA">付録A. 流星スペクトルの主要輝線</a></li><li><a href="#appB">付録B. 更新履歴</a></li><li><a href="#appC">付録C. モジュール構成（V2.5.1）</a></li></ol></li></ol></nav>
+<main>
+<h1 id="s1">1. 概要</h1>
+<p>Hokulele（ホクレレ）は、流星の動画観測データから流星スペクトルの測光・解析を行う
+GUI
+ソフトウェアです。回折格子を取り付けたカメラで撮影した流星動画から、0次像（流星本体）の光度曲線、1次像（スペクトル）の波長較正・感度補正・フィルター合成測光、さらに恒星マッチングによる位置較正を利用した放射点・軌道の推定までを一貫して実行できます。</p>
+<p>本書は Hokulele V2.5.1
+の使用マニュアルです。実際の画面のスクリーンショットを用いて、動画の読み込みから各解析・出力までの操作を順に説明します。画面例にはサンプル動画
+sample_synthetic_meteor.avi（960×480, 30fps, 60フレーム、フレーム 10〜49
+に流星）を使用しています。</p>
+<h2 id="s1-1">1.1 主な機能</h2>
+<ul>
+<li><p>カラー / 白黒の動画（AVI, MP4, MOV
+等）および連番画像（8/16bit）の読み込み（ffmpeg 不要）</p></li>
+<li><p>γ補正 13 種（RAW, γ=1, 0.35, 0.45, 1/1.9, 1/2.2, 1/2.4, BT.709,
+S-Log2, S-Log3, HLG, Canon Log, V-Log）— 対応カメラ機種名つき</p></li>
+<li><p>ダーク補正（動画内フレーム範囲 /
+外部ファイル）とフラット補正</p></li>
+<li><p>歪み補正（plate constant）: 同心円チャート計測、または
+astrometry.net による恒星マッチング</p></li>
+<li><p>0次像の自動追跡＋開口測光（光度曲線）</p></li>
+<li><p>1次像の波長較正・感度補正（3 方式）・UBVRI / SDSS ugriz /
+カスタムフィルター合成測光</p></li>
+<li><p>見かけ放射点・対地速度・日心軌道要素の推定（単点観測・高度仮定）</p></li>
+<li><p>合成スペクトル画像（比較明 / 加算平均）の FITS / PNG / JPEG
+出力</p></li>
+<li><p>マウス追従ルーペ、プレビュー再生、キーボードショートカット、プロジェクト設定
+JSON、解析結果ログ</p></li>
+<li><p>分光解析デモ: サンプル動画を使い、解析手順を 1
+ステップずつ実演</p></li>
+<li><p>表示言語の切替（日本語 / English）</p></li>
+</ul>
+<h2 id="s1-2">1.2 V2.5 での変更点</h2>
+<ul>
+<li><p><strong>日本語 / English の切替:</strong>
+画面・メッセージ・出力ファイルの見出しを英語でも表示できるようになりました。メニューバーの「言語
+/ Language」で切り替えます（2.6 節）。</p></li>
+<li><p><strong>配布先の変更:</strong> 配布ページを
+https://github.com/nu-sx/hokulele
+に移しました。分光解析デモのデータもこのページから取得します。</p></li>
+<li><p><strong>英語版マニュアル:</strong>
+英語版の使用マニュアル（Hokulele_Manual_en.docx）を同梱しました。</p></li>
+<li><p><strong>アイコン（V2.5.1）:</strong>
+しし座としし座流星群の流星、0次像・1次像と流星スペクトルを描いたアイコンに変更しました。</p></li>
+</ul>
+<h2 id="s1-3">1.3 V2.4 での変更点</h2>
+<ul>
+<li><p><strong>Windows 11 / macOS 版を公開:</strong> Python
+を用意しなくても、インストーラ（Windows）または
+dmg（macOS）からインストールして使えるようになりました（第 2
+章）。</p></li>
+<li><p><strong>分光解析デモ:</strong>
+動画タブの「デモを開始」で、サンプル動画を GitHub
+から取得し、読み込みから 1 次像のスペクトル測光までを実演します（4.1
+節）。</p></li>
+<li><p><strong>負のカウントの扱い:</strong> 感度補正前に負のカウントを 0
+にしていたため、低 S/N
+では強度が正に偏っていました。既定で切り捨てないようにし、旧挙動は
+1次像タブの「負のカウントを0に切り捨てる」で選べます。</p></li>
+<li><p><strong>不具合修正:</strong> 歪み係数ファイル（V0.971 形式）の 4
+番目の値を水平画角として正しく読むように修正、感度曲線の G→R
+チャンネル切替点の判定を V0.971 と同じ方法に修正、入射角を
+0次光位置の画像中心からの距離で計算するよう修正しました。</p></li>
+<li><p><strong>グラフの日本語表示:</strong>
+グラフのタイトルなどの日本語が □
+で表示される問題を修正しました。</p></li>
+</ul>
+<h2 id="s1-4">1.4 引用と謝辞</h2>
+<p>Hokulele
+を使った研究成果を論文などで発表する際は、次の論文を引用し、謝辞に
+Hokulele を使用したことを記載してください。</p>
+<h3 id="引用文献">引用文献</h3>
+<blockquote>
+<p>Abe, S., Ogawa, T., Maeda, K., &amp; Arai, T. (2020). Sodium
+variation in Geminid meteoroids from (3200) Phaethon. <em>Planetary and
+Space Science</em>, <strong>194</strong>, 105040.
+https://doi.org/10.1016/j.pss.2020.105040</p>
+</blockquote>
+<h3 id="謝辞の例英文">謝辞の例（英文）</h3>
+<blockquote>
+<p>This research made use of Hokulele, a meteor spectroscopy analysis
+software (Abe et al., 2020).</p>
+</blockquote>
+<h3 id="謝辞の例和文">謝辞の例（和文）</h3>
+<blockquote>
+<p>本研究では流星分光解析ソフトウェア Hokulele（Abe et al.,
+2020）を使用した。</p>
+</blockquote>
+<h1 id="s2">2. 動作環境とインストール</h1>
+<h2 id="s2-1">2.1 動作環境</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>OS</strong></th>
+<th><strong>条件</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td>Windows 10 / 11（64bit）</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>macOS 12 以降、Apple シリコン（M1 以降）の Mac。Intel Mac
+には対応していません</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><p>分光解析デモと恒星マッチング（astrometry.net）にはインターネット接続が必要です。</p></li>
+</ul>
+<h2 id="s2-2">2.2 ダウンロード</h2>
+<p>次のページの「Releases」から、お使いの OS
+用のファイルをダウンロードします。</p>
+<blockquote>
+<p>https://github.com/nu-sx/hokulele/releases</p>
+</blockquote>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>OS</strong></th>
+<th><strong>ファイル名</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows 10 / 11</td>
+<td>Hokulele-2.5.1-Windows-x64-Setup.exe（インストーラ）</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>Hokulele-2.5.1-macOS-arm64.dmg</td>
+</tr>
+<tr>
+<td>使用マニュアル</td>
+<td>Hokulele-2.5.1-Manual-ja.docx（日本語）/
+Hokulele-2.5.1-Manual-en.docx（English）</td>
+</tr>
+</tbody>
+</table></div>
+<p>同じページの SHA256SUMS.txt
+に各ファイルのチェックサムが記載されています。ダウンロードしたファイルが壊れていないか確かめるときに使います。</p>
+<h2 id="s2-3">2.3 Windows へのインストール</h2>
+<ol type="1">
+<li><p>Hokulele-2.5.1-Windows-x64-Setup.exe
+をダブルクリックします。</p></li>
+<li><p>「Windows によって PC
+が保護されました」と表示された場合は、「詳細情報」→「実行」を押します（コード署名をしていないため表示されます）。</p></li>
+<li><p>画面の指示に従ってインストールします。インストール先は既定でユーザーのフォルダです。デスクトップにアイコンを作るかどうかを選べます。</p></li>
+<li><p>スタートメニューの「Hokulele」から起動します。同じフォルダに使用マニュアル（日本語
+/
+English）とサンプル・資料フォルダへのショートカットがあります。</p></li>
+</ol>
+<p>アンインストールは「設定」→「アプリ」→「インストールされているアプリ」の
+Hokulele から行います。</p>
+<h2 id="s2-4">2.4 macOS へのインストール</h2>
+<ol type="1">
+<li><p>Hokulele-2.5.1-macOS-arm64.dmg
+をダブルクリックして開きます。</p></li>
+<li><p>Hokulele.app
+を、同じウィンドウ内の「Applications」フォルダへドラッグします。</p></li>
+<li><p>「アプリケーション」フォルダの Hokulele を開きます。</p></li>
+<li><p>初回に「開発元を確認できないため開けません」と表示された場合は、「システム設定」→「プライバシーとセキュリティ」を開き、下の方にある「このまま開く」を押します（Apple
+の公証を受けていないため表示されます）。</p></li>
+</ol>
+<p>dmg には、はじめにお読みください（日本語 /
+English）・サンプル動画・使用マニュアル（日本語 /
+English）も入っています。</p>
+<h2 id="s2-5">2.5 起動と終了</h2>
+<p>起動すると図1のメインウィンドウが開きます。終了するときはウィンドウを閉じ、確認ダイアログで「OK」を押します。</p>
+<h2 id="s2-6">2.6 表示言語（日本語 / English）</h2>
+<p>Hokulele は日本語と英語で表示できます。初回起動時は OS
+の表示言語に合わせて自動的に選ばれます。</p>
+<ol type="1">
+<li><p>メニューバーの「言語 / Language」を開きます（macOS
+では画面上部のメニューバー、Windows
+ではウィンドウ上部にあります）。</p></li>
+<li><p>「日本語」または「English」を選びます。</p></li>
+<li><p>「今すぐ再起動しますか？」と聞かれるので、「はい」を押すと
+Hokulele
+が再起動して新しい言語で表示されます。「いいえ」を押した場合は、次回の起動から反映されます。</p></li>
+</ol>
+<ul>
+<li><p>切り替えるのは画面の表示だけです。解析の方法と結果の数値は言語によって変わりません。</p></li>
+<li><p>英語表示では、出力テキストの見出し行・解析ログ・軌道レポートも英語になります。</p></li>
+<li><p>設定はホームフォルダの Hokulele_data/hokulele_settings.json
+に保存されます。</p></li>
+</ul>
+<blockquote>
+<p>※
+再起動すると、それまでの解析状態は破棄されます。必要なら先に「設定を保存
+(JSON)」でプロジェクト設定を保存してください。</p>
+</blockquote>
+<h2 id="s2-7">2.7 データの保存先</h2>
+<ul>
+<li><p>解析結果は「測光データ保存先」（動画タブで設定）の下の「動画名_result」フォルダに出力されます。</p></li>
+<li><p>分光解析デモのデータと結果は、ホームフォルダの Hokulele_data/demo
+に保存されます。不要になったら削除してかまいません。</p></li>
+</ul>
+<h1 id="s3">3. 画面構成と基本操作</h1>
+<h2 id="s3-1">3.1 メインウィンドウ</h2>
+<figure><img src="manual/img/ja/fig01.jpg" alt="起動直後のメインウィンドウ（動画タブ）" loading="lazy"><figcaption>図1 起動直後のメインウィンドウ（動画タブ）</figcaption></figure>
+<p>メインウィンドウは左右 2
+ペインで構成されます。左側が画像表示部、右側が解析タブ（動画 / 較正 /
+波長較正 / 0次像 / 1次像 / 軌道 / 出力）です。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>領域</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>画像表示部</td>
+<td>現在フレームまたは合成画像を表示。クリックで各種計測（チャート交点・輝線・0次像位置など）を行う</td>
+</tr>
+<tr>
+<td>フレーム操作列</td>
+<td>← / → ボタン、▶
+再生ボタン、フレームスライダー、フレーム番号と経過時刻 [s]</td>
+</tr>
+<tr>
+<td>表示調整列</td>
+<td>明るさ調整スライダー、「較正後を表示」、「元画像に戻す」、「ルーペ」チェックと倍率（x4/x8/x16）</td>
+</tr>
+<tr>
+<td>ステータスバー</td>
+<td>処理の進捗や次に行う操作のガイドを表示</td>
+</tr>
+<tr>
+<td>画素値バー</td>
+<td>マウス位置の X, Y 座標と輝度値（カラーは R, G, B、白黒は
+Count）</td>
+</tr>
+<tr>
+<td>ツールバー（最下段）</td>
+<td>matplotlib
+標準のホーム・戻る/進む・パン・ズーム・余白調整・画像保存</td>
+</tr>
+<tr>
+<td>解析タブ（右側）</td>
+<td>解析の各段階の設定と実行ボタン</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s3-2">3.2 ルーペ（マウス追従拡大鏡）</h2>
+<p>画像上でマウスを動かすと、カーソル位置周辺を拡大した小ウィンドウ（ルーペ）がカーソルの右下に表示されます（図2）。淡い流星像の確認や、チャート交点・輝線・0次像位置を
+1 ピクセル精度でクリックするのに便利です。</p>
+<figure><img src="manual/img/ja/fig02.jpg" alt="ルーペで流星の0次像を拡大表示した例（x8）" loading="lazy"><figcaption>図2 ルーペで流星の0次像を拡大表示した例（x8）</figcaption></figure>
+<ul>
+<li><p>中心の十字線が注目画素（クリックされる画素）です。下部に座標・輝度値・倍率が表示されます。</p></li>
+<li><p>画面の右端・下端では自動的に反対側へ回り込みます。</p></li>
+<li><p>倍率は表示調整列のコンボボックスで x4 / x8 / x16 を選択。ON/OFF
+は「ルーペ」チェックまたは L キー。</p></li>
+</ul>
+<blockquote>
+<p>※
+ルーペは表示中の画像（明るさ調整・較正後表示を反映）を拡大します。輝度値の数値はガンマ補正前の生カウントです。</p>
+</blockquote>
+<h2 id="s3-3">3.3 プレビュー再生</h2>
+<p>▶ 再生ボタン（または Space
+キー）で現在フレームから動画を再生します。再生中はボタンが ■ 停止
+に変わり、最終フレームで自動停止します。</p>
+<h2 id="s3-4">3.4 キーボードショートカット</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>キー</strong></th>
+<th><strong>動作</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>← / →</td>
+<td>1 フレーム戻る / 進む</td>
+</tr>
+<tr>
+<td>Shift + ← / →</td>
+<td>10 フレーム戻る / 進む</td>
+</tr>
+<tr>
+<td>Home / End</td>
+<td>先頭 / 最終フレームへ</td>
+</tr>
+<tr>
+<td>Space</td>
+<td>プレビュー再生 / 停止</td>
+</tr>
+<tr>
+<td>S / E</td>
+<td>測光範囲の始点 / 終点 = 現在フレーム</td>
+</tr>
+<tr>
+<td>L</td>
+<td>ルーペの ON / OFF</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>※
+文字入力欄にカーソルがある間はショートカットは無効です。画像やスライダーをクリックしてから操作してください。</p>
+</blockquote>
+<h1 id="s4">4.
+解析の流れ（クイックスタート）</h1>
+<h2 id="s4-1">4.1
+分光解析デモで手順を体験する</h2>
+<p>初めて使うときは、分光解析デモで解析の流れを確認するのがおすすめです。サンプル動画を使い、動画の読み込みから
+1
+次像のスペクトル測光と結果の表示までを、実際の画面操作と同じ手順で実演します。</p>
+<ol type="1">
+<li><p>動画タブの一番下にある「分光解析デモ」の「デモを開始」を押します。図3のデモウィンドウが開きます。</p></li>
+<li><p>「次へ ▶」を押すと 1
+ステップずつ進みます。各ステップの説明がウィンドウ下部に表示され、メインウィンドウでは対応するタブが開いて操作が行われます。クリック位置は水色の
+× で表示されてから確定します（図4）。</p></li>
+<li><p>「最後まで自動実行」を押すと、残りのステップを続けて実行します。</p></li>
+<li><p>全ステップが終わると、各ステップに「✓
+完了」が付きます（図5）。「結果フォルダを開く」で、スペクトルのテキストや解析ログを確認できます。</p></li>
+</ol>
+<figure><img src="manual/img/ja/fig03.jpg" alt="分光解析デモのウィンドウ（開始前）" loading="lazy"><figcaption>図3 分光解析デモのウィンドウ（開始前）</figcaption></figure>
+<figure><img src="manual/img/ja/fig04.jpg" alt="デモ実行中（スペクトルの傾きを計測するステップ）" loading="lazy"><figcaption>図4 デモ実行中（スペクトルの傾きを計測するステップ）</figcaption></figure>
+<figure><img src="manual/img/ja/fig05.jpg" alt="デモ完了（1次像タブにスペクトル測光の結果が表示される）" loading="lazy"><figcaption>図5 デモ完了（1次像タブにスペクトル測光の結果が表示される）</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>ステップ</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. デモデータの取得</td>
+<td>GitHub（nu-sx/hokulele）からサンプル動画と解析パラメータを取得。2
+回目以降は保存済みのデータを使う</td>
+</tr>
+<tr>
+<td>2〜3. 動画・測光範囲</td>
+<td>動画を開き、測光範囲をフレーム 10〜49 に設定</td>
+</tr>
+<tr>
+<td>4. 較正</td>
+<td>γ = RAW、ダーク = フレーム 0〜8、水平画角 60°</td>
+</tr>
+<tr>
+<td>5〜8. 波長較正</td>
+<td>比較明合成、輝線の傾き、測光帯、輝線同定（Na I D 589.16 nm, Mg I b
+517.27 nm）</td>
+</tr>
+<tr>
+<td>9. 0次像の追跡</td>
+<td>流星本体を自動追跡して開口測光</td>
+</tr>
+<tr>
+<td>10〜11. 1次像</td>
+<td>感度補正なし、B・V・R
+で合成測光し、光度曲線と平均スペクトルを表示</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>※ デモにはインターネット接続が必要です（初回のみ約 1 MB
+をダウンロード）。デモを開始すると、それまでの解析状態は破棄されます。デモの結果はホームフォルダの
+Hokulele_data/demo に保存されます。</p>
+</blockquote>
+<h2 id="s4-2">4.2 解析の手順</h2>
+<p>標準的な解析手順は次のとおりです。各手順の詳細は第 5
+章を参照してください。</p>
+<ol type="1">
+<li><p>【動画タブ】読み込みオプションを設定してから動画（または連番画像）を開き、fps
+と保存先を確認する。</p></li>
+<li><p>【動画タブ】流星が写っているフレーム範囲を測光範囲として設定する（S
+/ E キーでも可）。</p></li>
+<li><p>【較正タブ】撮影カメラに合わせてガンマ補正を選択する（第 6
+章参照）。</p></li>
+<li><p>【較正タブ】ダークとフラットを設定する。</p></li>
+<li><p>【較正タブ】歪み補正（チャート計測または恒星マッチング）と水平画角を設定する。軌道推定には恒星マッチングが必須。</p></li>
+<li><p>【較正タブ】回折格子の傾き（分散軸）を計測する。</p></li>
+<li><p>【波長較正タブ】比較明合成 → スペクトルの傾き → 測光帯 →
+輝線同定で波長較正する。</p></li>
+<li><p>【0次像タブ】流星本体をクリックして自動追跡＋開口測光を実行し、光度曲線を保存する。</p></li>
+<li><p>【1次像タブ】感度曲線とフィルターを設定して測光を実行する。</p></li>
+<li><p>【軌道タブ】観測地・UTC
+時刻・高度仮定を入力して放射点・軌道要素を推定する。</p></li>
+<li><p>【出力タブ】合成スペクトル画像を FITS / PNG / JPEG
+で保存する。</p></li>
+<li><p>【動画タブ】「設定を保存
+(JSON)」でプロジェクト設定を保存し、次回の解析で再利用する。</p></li>
+</ol>
+<h1 id="s5">5. 各タブの操作</h1>
+<h2 id="s5-1">5.1 動画タブ</h2>
+<h3 id="読み込みオプション">読み込みオプション</h3>
+<ul>
+<li><p>グレースケールで解析する:
+カラー動画を輝度のみで解析します。</p></li>
+<li><p>90 度回転させる:
+分散方向が縦向きの動画を横向きに直します（分散軸は水平が前提）。</p></li>
+<li><p>切出し範囲 [s]:
+長い動画の一部だけを読み込みます（空欄で全体）。</p></li>
+</ul>
+<blockquote>
+<p>※ これらのオプションは動画を開く前に設定してください。</p>
+</blockquote>
+<h3 id="動画を開く">動画を開く</h3>
+<p>「動画ファイルを開く (avi等)」で AVI / MP4 / MOV / MKV / WMV / M2TS
+等を、「連番画像フォルダを開く」で連番静止画（16bit TIFF/PNG
+含む）を読み込みます。読み込み後、ファイル名・解像度・フレーム数・カラー/グレー・ビット深度が表示されます（図6）。</p>
+<figure><img src="manual/img/ja/fig06.jpg" alt="サンプル動画を読み込んだ状態（フレーム30）" loading="lazy"><figcaption>図6 サンプル動画を読み込んだ状態（フレーム30）</figcaption></figure>
+<h3 id="フレームレート保存先">フレームレート・保存先</h3>
+<p>fps
+は動画から自動取得されます。連番画像や正確な値が分かっている場合は手入力して「設定」を押してください。fps
+は光度曲線の時刻と軌道推定の速度に直接影響します。解析結果は「測光データ保存先/動画名_result/」フォルダに出力されます。</p>
+<h3 id="測光範囲フレーム">測光範囲（フレーム）</h3>
+<p>流星が写っているフレーム範囲を指定します。スライダー（または ← /
+→）で流星の出現フレームへ移動して「始点=現在フレーム」、消滅フレームへ移動して「終点=現在フレーム」を押します（S
+/ E キーでも可）。設定した範囲が右側に表示されます（図7）。</p>
+<figure><img src="manual/img/ja/fig07.jpg" alt="測光範囲を 10〜49 に設定した状態" loading="lazy"><figcaption>図7 測光範囲を 10〜49 に設定した状態</figcaption></figure>
+<h3 id="プロジェクト設定の保存-読込">プロジェクト設定の保存 / 読込</h3>
+<p>「設定を保存
+(JSON)」でガンマ設定・保存先・感度曲線・測光範囲・fps・歪み係数・回折格子の傾き・観測地・読み込みオプションを
+JSON
+に保存します。「設定を読込」で復元できます（動画を開いた後に読み込むと確実です）。</p>
+<blockquote>
+<p>※
+ダーク/フラットのファイル指定と波長較正は含まれません。波長較正は波長較正タブの「較正保存
+/ 較正読込」を利用してください。</p>
+</blockquote>
+<h3 id="分光解析デモ">分光解析デモ</h3>
+<p>「デモを開始」で分光解析デモを始めます（4.1 節）。</p>
+<h2 id="s5-2">5.2 較正タブ</h2>
+<figure><img src="manual/img/ja/fig08.jpg" alt="較正タブ（ダーク: 動画内 0〜8、水平画角 60° を設定した例）" loading="lazy"><figcaption>図8 較正タブ（ダーク: 動画内 0〜8、水平画角 60° を設定した例）</figcaption></figure>
+<h3 id="ガンマ補正">ガンマ補正</h3>
+<p>プルダウンから撮影カメラに対応する設定を選び「設定」を押します。選択すると下部に対応カメラ機種の説明が表示されます。詳細は第
+6 章を参照してください。</p>
+<h3 id="ダーク画像">ダーク画像</h3>
+<ul>
+<li><p>動画内から生成:
+流星が写る前のフレームへ移動して「始点=現在」「終点=現在」を押すと、その範囲の加算平均がダークになります（夜空の背景も同時に差し引かれます）。</p></li>
+<li><p>外部ファイル選択: 本ソフトの出力 FITS を推奨（PNG/TIFF
+等も可）。</p></li>
+<li><p>無効: ダーク補正を解除します。</p></li>
+</ul>
+<h3 id="フラット画像">フラット画像</h3>
+<p>最大値を 1 に正規化した FITS
+を推奨します（出力タブの「最大値を1として出力する」で作成できます）。</p>
+<h3 id="歪み補正plate-constant">歪み補正（plate constant）</h3>
+<p>Brown モデル r_obs = r_true (1 + k1 r² + k2 r⁴ + k3 r⁶)
+による半径方向の歪み補正です。現在の係数・焦点距離・水平画角・方式・WCS
+の有無が枠の上部に表示されます。</p>
+<ul>
+<li><p><strong>チャート計測:</strong>
+同心円チャートを撮影した画像で「チャート計測」を押すと、図9の小ウィンドウが開きます。円と放射線の交点を中心に近い円から順にクリックし（クリック点は水色の
+× で表示）、円ごとに「次の円へ」、最後に「計測終了」を押すと k1, k2, k3
+がフィットされます（4 円以上必要）。この方式では水平画角 [deg]
+を手入力して「設定」を押してください。</p></li>
+<li><p><strong>恒星マッチング(astrometry.net):</strong>
+ボタンを押すと図10のダイアログが開きます。API キー（nova.astrometry.net
+→ My Profile → API
+key）を入力し「プレートソルブ実行」を押すと、比較明合成（または現在フレーム）をプレートソルブし、WCS
+から焦点距離・歪み係数・水平画角を自動設定します。WCS
+は軌道推定にも使われます。</p></li>
+</ul>
+<figure><img src="manual/img/ja/fig09.jpg" alt="チャート計測（交点クリック中。左下が操作ウィンドウ）" loading="lazy"><figcaption>図9 チャート計測（交点クリック中。左下が操作ウィンドウ）</figcaption></figure>
+<figure><img src="manual/img/ja/fig10.jpg" alt="恒星マッチング（astrometry.net）ダイアログ" loading="lazy"><figcaption>図10 恒星マッチング（astrometry.net）ダイアログ</figcaption></figure>
+<p>計測結果は「設定保存」「開く」で V0.971 互換のテキスト（k1, k2, k3,
+ff）として保存・再利用できます。「初期化」で係数をリセット、「WCS読込(wcs.fits)」で保存済み
+WCS を読み込みます。</p>
+<h3 id="回折格子の傾き分散軸">回折格子の傾き（分散軸）</h3>
+<p>「計測開始」を押し、同一スペクトルの中心線上の特徴点を数点クリックして「計測終了」を押すと、分散軸の傾きが直線フィットで求まります。</p>
+<h2 id="s5-3">5.3 波長較正タブ（輝線同定）</h2>
+<h3 id="手順-1-合成画像の準備">手順 1: 合成画像の準備</h3>
+<p>「測光範囲を比較明合成して表示」を押すと、測光範囲のフレームを比較明合成した画像が表示されます（図11）。白い列が
+0 次像（流星本体）の軌跡、右側の色付きの列が 1
+次スペクトルの輝線です。撮影済みの輝線ランプ画像を使う場合は「輝線FITSを読み込む」を押します。</p>
+<figure><img src="manual/img/ja/fig11.jpg" alt="測光範囲の比較明合成画像" loading="lazy"><figcaption>図11 測光範囲の比較明合成画像</figcaption></figure>
+<h3 id="手順-2-スペクトル輝線の傾き">手順 2:
+スペクトル（輝線）の傾き</h3>
+<p>「計測開始
+(同一輝線を数点クリック)」を押し、同じ輝線の軌跡上を数点クリックして（図12の水色
+×）「計測終了」を押します。傾きが右側に表示されます。</p>
+<figure><img src="manual/img/ja/fig12.jpg" alt="同一輝線上を 4 点クリックして傾きを計測" loading="lazy"><figcaption>図12 同一輝線上を 4 点クリックして傾きを計測</figcaption></figure>
+<h3 id="手順-3-測光帯">手順 3: 測光帯</h3>
+<p>「指定開始
+(上下2点クリック)」を押し、スペクトル像の上端と下端を余裕をもって 2
+点クリックして（図13）「指定終了」を押します。</p>
+<figure><img src="manual/img/ja/fig13.jpg" alt="測光帯の上端・下端を指定" loading="lazy"><figcaption>図13 測光帯の上端・下端を指定</figcaption></figure>
+<h3 id="手順-4-輝線同定">手順 4: 輝線同定</h3>
+<p>「プロファイル表示→輝線同定」を押すと、図14の輝線同定ウィンドウが開きます。グラフは測光帯内のピクセル位置ごとのカウントです（左の大きなピークが
+0 次像）。</p>
+<ol type="1">
+<li><p>グラフ上のピークをクリックすると、近くの極大へ自動スナップして赤い点が付きます（≪
+&lt; &gt; ≫ ボタンで微調整）。</p></li>
+<li><p>「波長[nm]」欄に波長を入力するか、右のプルダウン（参考輝線）から選びます。</p></li>
+<li><p>「波長設定
+(このピーク)」を押すと較正点として登録され、緑の縦線と波長が表示されます。誤った点は「1点削除」で取り消せます。</p></li>
+<li><p>2 点以上（推奨 4 点以上）登録したら「波長較正
+(フィット)」を押します。4 点以上で二次式 λ = ax² + bx + c、2〜3
+点は一次式でフィットされ、横軸が波長 [nm]
+に切り替わります（図15）。</p></li>
+<li><p>「測定終了」でウィンドウを閉じます。</p></li>
+</ol>
+<figure><img src="manual/img/ja/fig14.jpg" alt="輝線同定ウィンドウ（Na I D 589.2 nm を登録後、Mg I b のピークを選択中）" loading="lazy"><figcaption>図14 輝線同定ウィンドウ（Na I D 589.2 nm を登録後、Mg I b のピークを選択中）</figcaption></figure>
+<figure><img src="manual/img/ja/fig15.jpg" alt="波長較正後（横軸が波長 [nm] に変わる）" loading="lazy"><figcaption>図15 波長較正後（横軸が波長 [nm] に変わる）</figcaption></figure>
+<p>較正が完了すると、フィッティング式・一次近似式・0 次光位置
+x0・較正点一覧・RMS
+残差が波長較正タブに表示され（図16）、解析ログにも記録されます。RMS
+残差が波長分解能より明らかに大きい場合は、輝線の同定ミスや較正点の追加を検討してください。</p>
+<figure><img src="manual/img/ja/fig16.jpg" alt="波長較正完了後の波長較正タブ" loading="lazy"><figcaption>図16 波長較正完了後の波長較正タブ</figcaption></figure>
+<blockquote>
+<p>※ 画面例はサンプル動画のため 2
+点（一次式）で較正しています。実データでは 4
+点以上を推奨します。「較正保存 /
+較正読込」で較正結果を再利用できます（形式 [a, b, c, lin_a,
+lin_b]）。</p>
+</blockquote>
+<h2 id="s5-4">5.4 0次像タブ</h2>
+<p>流星本体（0 次像）を自動追跡し、開口測光で光度曲線を求めます。</p>
+<ol type="1">
+<li><p>必要に応じて追跡パラメータ（探索半径・開口半径・背景内径/外径・最小SNR）を調整します。</p></li>
+<li><p>「開始フレームで位置をクリック」を押すと測光範囲の開始フレームが表示されるので、流星本体をクリックします（図17の水色
+×）。ルーペで中心を正確に狙えます。</p></li>
+<li><p>「位置確定」を押すと初期位置が右側に表示されます。</p></li>
+<li><p>「追跡+測光を実行
+(測光範囲)」を押すと、重心追跡＋線形予測で自動追尾します。追跡結果はオレンジの軌跡で表示され、検出数が表示されます（図18）。</p></li>
+<li><p>「光度曲線を表示」でネットカウントと機械等級の時間変化を確認します（図19）。</p></li>
+<li><p>「テキスト保存」で zeroorder_lightcurve.txt
+を出力します。</p></li>
+</ol>
+<figure><img src="manual/img/ja/fig17.jpg" alt="開始フレーム（10）で0次像の初期位置をクリック" loading="lazy"><figcaption>図17 開始フレーム（10）で0次像の初期位置をクリック</figcaption></figure>
+<figure><img src="manual/img/ja/fig18.jpg" alt="追跡完了（40 フレーム中 40 検出、オレンジ線が追跡軌跡）" loading="lazy"><figcaption>図18 追跡完了（40 フレーム中 40 検出、オレンジ線が追跡軌跡）</figcaption></figure>
+<figure><img src="manual/img/ja/fig19.jpg" alt="0次像の光度曲線（上: ネットカウント、下: 機械等級）" loading="lazy"><figcaption>図19 0次像の光度曲線（上: ネットカウント、下: 機械等級）</figcaption></figure>
+<h2 id="s5-5">5.5 1次像タブ（スペクトル /
+フィルター測光）</h2>
+<h3 id="感度曲線の較正方式">感度曲線の較正方式</h3>
+<p>スペクトルのカウント値を相対強度へ変換する方式を、使用するグレーティングに合わせてラジオボタンで選択します。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>方式</strong></th>
+<th><strong>対象・内容</strong></th>
+<th><strong>入力データ</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>入射角補正</p>
+<p>(厚みのあるグレーティング)</p></td>
+<td>画角内の位置によって回折効率が変わる格子用。入射角別の感度曲線を角度間で線形補間</td>
+<td>「フォルダ設定」で指定。ファイル名は「入射角[deg].txt」（例 0.0.txt,
+30.0.txt）</td>
+</tr>
+<tr>
+<td><p>同一感度曲線</p>
+<p>(シートグレーティング)</p></td>
+<td>入射角依存が小さい格子用。1 本の感度曲線を全画角に共通適用</td>
+<td>「ファイル選択」で [波長(nm) 相対感度] の 2 列テキスト（4 列 [波長 R
+G B] も可）</td>
+</tr>
+<tr>
+<td>感度補正なし</td>
+<td>カウント値をそのまま強度に使用（カラーは R+G+B
+合算）。予備解析・輝線確認用</td>
+<td>不要。波長範囲は既定 300〜1100 nm</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="測光設定と実行">測光設定と実行</h3>
+<ul>
+<li><p>分散方向が右から左である: 入射角の正負を反転します。</p></li>
+<li><p>負のカウントを0に切り捨てる: V0.971 / V2.3
+と同じ処理にします。既定は OFF です（低 S/N
+では、切り捨てると強度が正に偏るため）。</p></li>
+<li><p>カウント値で出力する: 感度補正なしの [波長, R, G,
+B]（感度曲線作成用）を出力します。波長最小/最大の入力が必要です。</p></li>
+<li><p>0次像トラックに追従する: フレームごとに 0
+次光位置に合わせて波長原点をシフトして抽出します（要:
+0次像追跡）。</p></li>
+<li><p>フィルター選択: Johnson-Cousins U B V R I / SDSS u g r i z
+から複数選択可。「カスタムフィルター読込」で [波長nm 透過率]
+テキストも追加できます。</p></li>
+</ul>
+<p>「測光開始
+(フレーム毎スペクトル+バンド測光)」を押すと、完了時に出力先が表示されます（図20）。「バンド光度曲線を表示」でバンド別の光度曲線と平均スペクトルを確認できます（図21）。</p>
+<figure><img src="manual/img/ja/fig20.jpg" alt="1次像タブ（感度補正なし、B・V・R を選択して測光完了）" loading="lazy"><figcaption>図20 1次像タブ（感度補正なし、B・V・R を選択して測光完了）</figcaption></figure>
+<figure><img src="manual/img/ja/fig21.jpg" alt="バンド光度曲線（上）と測光範囲の平均スペクトル（下）" loading="lazy"><figcaption>図21 バンド光度曲線（上）と測光範囲の平均スペクトル（下）</figcaption></figure>
+<blockquote>
+<p>※ 等級は機械等級（-2.5 log10
+flux）です。絶対等級への較正には標準星による零点決定が別途必要です。</p>
+</blockquote>
+<h2 id="s5-6">5.6 軌道タブ</h2>
+<p>0次像追跡の結果と
+WCS（恒星マッチング）から、見かけ放射点・対地速度・日心軌道要素を推定します。</p>
+<figure><img src="manual/img/ja/fig22.jpg" alt="軌道タブ" loading="lazy"><figcaption>図22 軌道タブ</figcaption></figure>
+<ul>
+<li><p>必要条件: 0次像追跡の実行済み、WCS 取得済み（恒星マッチングまたは
+WCS 読込）。</p></li>
+<li><p>入力: 観測地の緯度・経度・標高、測光範囲始点フレームの UTC
+時刻（ISO 形式, 例
+2026-01-01T15:00:00）、発光開始/終了高度の仮定値（既定 100 / 85
+km）。</p></li>
+<li><p>「放射点・軌道を推定」で結果が下のテキスト欄に表示されます:
+見かけ放射点 / 自転補正後 / 地心放射点（RA,
+Dec）、観測速度・v∞・vg・日心速度、軌道要素 a, e, q, i, Ω, ω。</p></li>
+<li><p>「レポート保存」で orbit_report.txt に出力します。</p></li>
+</ul>
+<blockquote>
+<p>※
+単点観測のため距離と速度は高度仮定に依存します。多点観測がある場合は実測高度を入力してください。</p>
+</blockquote>
+<h2 id="s5-7">5.7 出力タブ</h2>
+<figure><img src="manual/img/ja/fig23.jpg" alt="出力タブ" loading="lazy"><figcaption>図23 出力タブ</figcaption></figure>
+<ul>
+<li><p>合成方法: 加算平均（mean）/ 比較明合成（comp）。</p></li>
+<li><p>出力形式: FITS（浮動小数点）/ PNG（8bit）/
+JPEG（8bit）。</p></li>
+<li><p>「最大値を1として出力する」はフラット画像の作成用です。</p></li>
+<li><p>「歪み補正を適用して出力する」で作った画像はダーク/フラット用には使えません。</p></li>
+<li><p>「画像出力
+(測光範囲)」で測光範囲の合成画像を、「現在のフレームを出力」で単独フレームを出力します。</p></li>
+</ul>
+<h1 id="s6">6. γ補正とカメラ機種対応表</h1>
+<p>多くのカメラは記録時に階調圧縮（ガンマ／ログカーブ）を施しています。測光にはリニアなカウント値が必要なため、Hokulele
+は選択されたγ設定の逆変換を全フレームに適用します。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>No.</strong></th>
+<th><strong>設定名</strong></th>
+<th><strong>逆変換</strong></th>
+<th><strong>対応カメラ・記録設定の例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>RAW (科学計測カメラ)</td>
+<td>無補正</td>
+<td>ZWO ASI, QHY, Basler, FLIR, 冷却CCD 等の RAW 出力</td>
+</tr>
+<tr>
+<td>1</td>
+<td>γ=1 (リニア)</td>
+<td>0〜1 に正規化のみ</td>
+<td>ガンマ OFF 設定の産業用カメラ、Watec γ=1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>γ=0.35 (Watec LO)</td>
+<td>out = in^(1/0.35)</td>
+<td>Watec ガンマ LO（WAT-902H2, WAT-910HX 等）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>γ=0.45 (Watec HI / NTSC)</td>
+<td>out = in^(1/0.45)</td>
+<td>Watec ガンマ HI / 多くのアナログ CCD の既定値</td>
+</tr>
+<tr>
+<td>4</td>
+<td>γ=1/1.9</td>
+<td>out = in^1.9</td>
+<td>γ≒1/1.9 の民生ビデオカメラ</td>
+</tr>
+<tr>
+<td>5</td>
+<td>γ=1/2.2 (sRGB相当)</td>
+<td>out = in^2.2</td>
+<td>一般デジタルカメラの JPEG / 静止画</td>
+</tr>
+<tr>
+<td>6</td>
+<td>γ=1/2.4 (BT.1886)</td>
+<td>out = in^2.4</td>
+<td>BT.1886 基準の映像</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ITU-R BT.709 (HDビデオ)</td>
+<td>BT.709 逆 OETF</td>
+<td>HD ビデオカメラ標準、Canon EOS 動画、ME20F-SH Normal</td>
+</tr>
+<tr>
+<td>8</td>
+<td>S-Log2 (Sony α)</td>
+<td>S-Log2 逆変換</td>
+<td>Sony α7S/α7SII/α7III, FS7, FS5 の PP7</td>
+</tr>
+<tr>
+<td>9</td>
+<td>S-Log3 (Sony α/FX)</td>
+<td>S-Log3 逆変換</td>
+<td>Sony α7SIII, α7IV, α1, FX3, FX6, FX30 等</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HLG (BT.2100)</td>
+<td>HLG 逆 OETF</td>
+<td>Sony α の PP10, LUMIX HLG, GoPro HDR 等</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Canon Log (ME20F/EOS)</td>
+<td>Canon Log 逆変換</td>
+<td>ME20F-SH Canon Log, EOS R5/R6/R3 C-Log, Cinema EOS</td>
+</tr>
+<tr>
+<td>12</td>
+<td>V-Log (Panasonic)</td>
+<td>V-Log 逆変換</td>
+<td>LUMIX GH5/GH5S/GH6, S1/S1H/S5, BGH1 等</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><p>実効ガンマは機種・ファームウェア・ピクチャープロファイルで変わります。上表は目安です。</p></li>
+<li><p>Sony α: PP OFF/スチル系 → No.5〜7、PP7 → No.8、PP8/PP9 →
+No.9、PP10 → No.10。</p></li>
+<li><p>8bit 記録の Log
+映像は暗部の階調が粗く、逆変換後に量子化ノイズが強調されます。可能なら
+10bit 以上で記録してください。</p></li>
+<li><p>γ設定を変更したら必ず「設定」を押してください。較正キャッシュが破棄され以降の解析に反映されます。</p></li>
+</ul>
+<h1 id="s7">7. 出力ファイル一覧</h1>
+<p>解析結果は「保存先/動画名_result/」フォルダに出力されます。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>ファイル名</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zeroorder_lightcurve.txt</td>
+<td>0次像光度曲線: frame, time, x, y, count, bg, SNR, mag, RA, Dec, R,
+G, B</td>
+</tr>
+<tr>
+<td>spectrum_#####.txt</td>
+<td>フレーム毎スペクトル [波長nm, 強度]（カウントモードでは R, G,
+B）</td>
+</tr>
+<tr>
+<td>spectrum_mean_st-en.txt</td>
+<td>測光範囲の平均スペクトル</td>
+</tr>
+<tr>
+<td>band_lightcurve_&lt;filt&gt;.txt</td>
+<td>フィルター合成バンド測光: frame, time, flux, mag_inst, coverage</td>
+</tr>
+<tr>
+<td>orbit_report.txt</td>
+<td>放射点・速度・軌道要素レポート</td>
+</tr>
+<tr>
+<td>&lt;name&gt;_mean / comp .fits/.png/.jpg</td>
+<td>加算平均 / 比較明の合成スペクトル画像</td>
+</tr>
+<tr>
+<td>&lt;name&gt;_settings.json</td>
+<td>プロジェクト設定（保存場所は任意）</td>
+</tr>
+<tr>
+<td>analysis_log.txt</td>
+<td>解析結果ログ（自動追記）</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s7-1">7.1
+解析結果ログ（analysis_log.txt）</h2>
+<p>主要な操作が自動的に追記されます。動画を開くたびに新しいセッションとして区切られ、動画情報、ガンマ・ダーク・フラット・歪み補正、回折格子の傾き、波長較正式と
+RMS
+残差、感度曲線情報、0次像追跡、スペクトル測光、軌道推定、画像出力の記録が時刻付きで残ります。</p>
+<h2 id="s7-2">7.2 較正データの互換性</h2>
+<ul>
+<li><p>歪み係数ファイル（[k1, k2, k3, ff]）と感度曲線フォルダ形式は
+V0.971 と互換です。</p></li>
+<li><p>波長較正の保存形式は [a, b, c, lin_a, lin_b]（V2
+独自）です。</p></li>
+<li><p>設定 JSON は V2.2 / V2.3 のものをそのまま読み込めます。</p></li>
+</ul>
+<h1 id="s8">8. FAQ・トラブルシューティング</h1>
+<h3 id="q1">Q1. ルーペが表示されない</h3>
+<p>「ルーペ」チェックが ON
+か、動画が読み込まれているか確認してください。マウスが画像領域外にあると自動的に隠れます。L
+キーでも切り替えられます。</p>
+<h3 id="q2">Q2. ショートカットが効かない</h3>
+<p>文字入力欄にフォーカスがあると無効です。画像やスライダーをクリックしてから操作してください。</p>
+<h3 id="q3">Q3.
+どのガンマ設定を選べばよいか分からない</h3>
+<p>第 6
+章の対応表を参照してください。不明な場合は、視野内の恒星について等級と
+log
+カウントの直線性を各設定で比較し、最も直線的な設定を採用するのが実用的です。</p>
+<h3 id="q4">Q4. 恒星マッチングが失敗する</h3>
+<p>恒星が十分写っているか（比較明合成を推奨）、視野の目安が実際と大きくずれていないか、API
+キーとインターネット接続を確認してください。数十秒〜数分かかります。</p>
+<h3 id="q5">Q5. 軌道推定の結果が不自然</h3>
+<p>UTC 時刻・観測地座標の入力ミス、fps
+の誤設定、高度仮定のずれが主な原因です。</p>
+<h3 id="q6">Q6. 動画が開けない</h3>
+<p>OpenCV が対応しないコーデックの可能性があります。AVI (MJPEG) や MP4
+(H.264) に変換してください。16bit
+データは連番画像で読み込んでください。</p>
+<h3 id="q7">Q7.
+「別の処理が実行中です」と表示される</h3>
+<p>読み込み・追跡・測光などのバックグラウンド処理の完了を待ってから操作してください。進捗はステータスバーに表示されます。</p>
+<h3 id="q8">Q8.
+感度曲線の方式はどれを選べばよいか</h3>
+<p>シートグレーティングは「同一感度曲線」、厚みのあるグレーティング（ブレーズド格子など）は「入射角補正」、感度曲線がまだ無い予備解析は「感度補正なし」を選びます。</p>
+<h3 id="q9">Q9. Windows
+で「PC が保護されました」と表示される</h3>
+<p>コード署名をしていないために表示されます。「詳細情報」→「実行」を押してください。</p>
+<h3 id="q10">Q10.
+macOS で「開発元を確認できない」と表示されて開けない</h3>
+<p>「システム設定」→「プライバシーとセキュリティ」の「このまま開く」を押してください（2.4
+節）。</p>
+<h3 id="q11">Q11.
+英語（または日本語）で表示したい</h3>
+<p>メニューバーの「言語 / Language」で切り替え、再起動してください（2.6
+節）。</p>
+<h3 id="q12">Q12.
+デモで「デモ情報を取得できませんでした」と表示される</h3>
+<p>インターネット接続を確認してください。一度ダウンロードしたことがあれば、オフラインでも保存済みのデータでデモを実行できます。</p>
+<h1 id="app">付録</h1>
+<h2 id="appA">付録A.
+流星スペクトルの主要輝線</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>輝線</strong></th>
+<th><strong>波長 [nm]</strong></th>
+<th><strong>輝線</strong></th>
+<th><strong>波長 [nm]</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ca II K</td>
+<td>393.37</td>
+<td>Fe I (15)</td>
+<td>526.95</td>
+</tr>
+<tr>
+<td>Ca II H</td>
+<td>396.85</td>
+<td>O I</td>
+<td>557.73</td>
+</tr>
+<tr>
+<td>Ca I</td>
+<td>422.67</td>
+<td>Na I D</td>
+<td>589.16</td>
+</tr>
+<tr>
+<td>Fe I (42)</td>
+<td>430.79</td>
+<td>N2 (1PG)</td>
+<td>650.0 付近</td>
+</tr>
+<tr>
+<td>Fe I (41)</td>
+<td>441.51</td>
+<td>Hα</td>
+<td>656.28</td>
+</tr>
+<tr>
+<td>Mg I (2)</td>
+<td>448.11</td>
+<td>N I</td>
+<td>746.83</td>
+</tr>
+<tr>
+<td>Mg I b</td>
+<td>517.27</td>
+<td>O I</td>
+<td>777.42 / 844.64</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="appB">付録B. 更新履歴</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>版</strong></th>
+<th><strong>内容</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V0.971 (2021/04)</td>
+<td>ffmpeg による動画展開、γ補正 10
+種、チャート歪み計測、スペクトルテキスト出力</td>
+</tr>
+<tr>
+<td>V2.0 (v1.0)</td>
+<td>OpenCV 直接読込、恒星マッチング、0次像自動追跡＋開口測光、UBVRI/SDSS
+合成測光、放射点・軌道推定、FITS/PNG/JPEG 出力</td>
+</tr>
+<tr>
+<td>V2.1 (v1.1)</td>
+<td>ルーペ、γ補正のカメラ機種名と HLG / Canon Log / V-Log
+追加、ショートカット、プレビュー再生、経過時刻表示、設定 JSON</td>
+</tr>
+<tr>
+<td>V2.2 (v1.2)</td>
+<td>感度曲線の較正方式選択（3
+方式）、解析結果ログ、波長較正式の表示とヘッダ保存</td>
+</tr>
+<tr>
+<td>V2.3 (v1.3)</td>
+<td>本体を hokulele/
+パッケージ（複数モジュール）へ再構成。機能・操作・結果は v1.2
+と同一</td>
+</tr>
+<tr>
+<td>V2.5.1</td>
+<td>アイコンを変更（しし座・流星の0次像/1次像・流星スペクトル）</td>
+</tr>
+<tr>
+<td>V2.5</td>
+<td>日本語 / English の表示切替、配布先を nu-sx/hokulele
+に変更、英語版マニュアル</td>
+</tr>
+<tr>
+<td>V2.4.1</td>
+<td>使用マニュアルを V2.4
+の画面で更新、引用文献と謝辞の例を追記、分光解析デモの説明文の誤りを修正</td>
+</tr>
+<tr>
+<td>V2.4</td>
+<td>Windows 11 / macOS
+版の公開、分光解析デモ、負のカウントを既定で切り捨てない、歪み係数ファイル・感度曲線チャンネル切替・入射角の修正、グラフの日本語表示</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="appC">付録C.
+モジュール構成（V2.5.1）</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>モジュール</strong></th>
+<th><strong>役割</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>constants</td>
+<td>定数・輝線リスト・フィルター透過曲線・ガンマ設定</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td>カメラガンマ補正</td>
+</tr>
+<tr>
+<td>distortion</td>
+<td>Brown 歪みモデル・天球座標ユーティリティ</td>
+</tr>
+<tr>
+<td>calib_io</td>
+<td>ダーク/フラット画像の読み込み</td>
+</tr>
+<tr>
+<td>frame_source</td>
+<td>動画/連番画像フレームソースと較正パイプライン</td>
+</tr>
+<tr>
+<td>astrometry</td>
+<td>astrometry.net によるプレートソルブ</td>
+</tr>
+<tr>
+<td>tracker</td>
+<td>0次像の自動追跡・開口測光</td>
+</tr>
+<tr>
+<td>spectrum</td>
+<td>スペクトル抽出・波長較正・感度補正・フィルター測光</td>
+</tr>
+<tr>
+<td>orbit</td>
+<td>放射点・対地速度・軌道要素の推定</td>
+</tr>
+<tr>
+<td>output</td>
+<td>FITS/PNG/JPEG/テキスト出力</td>
+</tr>
+<tr>
+<td>utils</td>
+<td>GUI 用の小さなヘルパー</td>
+</tr>
+<tr>
+<td>gui_wavecal</td>
+<td>波長較正（輝線同定）ウィンドウ</td>
+</tr>
+<tr>
+<td>demo</td>
+<td>分光解析デモ用データの取得（GitHub からダウンロードして保存）</td>
+</tr>
+<tr>
+<td>gui_demo</td>
+<td>分光解析デモのウィンドウ</td>
+</tr>
+<tr>
+<td>i18n / i18n_en</td>
+<td>表示言語の切替と英訳の対応表</td>
+</tr>
+<tr>
+<td>gui_app</td>
+<td>メイン GUI（HokuleleApp）とエントリ関数 main()</td>
+</tr>
+</tbody>
+</table></div>
+
+<footer>Abe Laboratory, Department of Aerospace Engineering, Nihon University · <a href="https://github.com/nu-sx/HOKULELE">https://github.com/nu-sx/HOKULELE</a> · <a href="#top">ページの先頭へ</a></footer>
+</main>
+</div>
+</body>
+</html>

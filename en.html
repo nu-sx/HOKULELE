@@ -1,0 +1,1210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hokulele User Manual</title>
+<meta name="description" content="User manual of Hokulele V2.5.1, a meteor spectroscopy analysis software for meteor videos (October 2026). Hōkūlele means “shooting star” in Hawaiian.">
+<link rel="icon" type="image/png" href="docs/hokulele_icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --paper: #f6f8fa; --surface: #ffffff; --ink: #18212b; --muted: #5a6876; --rule: #d9e0e7;
+  --accent: #b8620f; --cool: #1f6fb2; --code-bg: #eef2f6; --head-bg: #131a28;
+  --f-display: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161c; --surface: #18202a; --ink: #e3e9ef; --muted: #9aa8b6; --rule: #2b3642;
+    --accent: #e89a45; --cool: #6aa9e0; --code-bg: #1d2731; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11161c; --surface: #18202a; --ink: #e3e9ef; --muted: #9aa8b6; --rule: #2b3642;
+  --accent: #e89a45; --cool: #6aa9e0; --code-bg: #1d2731; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 16px; }
+body { margin: 0; overflow-wrap: anywhere; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.8; }
+header.hero { background: var(--head-bg); padding: 20px 16px; text-align: center; }
+header.hero img { width: 100%; max-width: 820px; height: auto; display: block; margin: 0 auto; }
+.intro { max-width: 1180px; margin: 0 auto; padding: 32px 16px 0 calc(16px + 230px + 48px); }
+.intro > * { max-width: 820px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px;
+        padding: 8px 16px 80px; }
+nav.toc { position: sticky; top: 20px; align-self: start; font-size: 13px; line-height: 1.6;
+          max-height: calc(100vh - 40px); overflow-y: auto; }
+nav.toc .label { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+nav.toc ol { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 3px; }
+nav.toc ol ol { margin: 3px 0 4px 12px; }
+nav.toc a { color: var(--muted); text-decoration: none; }
+nav.toc li.l1 > a { color: var(--ink); font-weight: 700; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); }
+main { min-width: 0; max-width: 820px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.35; }
+h1.title { font-size: 32px; margin: 0 0 6px; }
+.sub { color: var(--muted); margin: 0 0 12px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+.links a { display: inline-block; padding: 5px 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface);
+           color: var(--cool); text-decoration: none; font-size: 14px; }
+.links a:hover { border-color: var(--cool); }
+.cite { font-size: 13px; color: var(--muted); }
+main h1 { font-size: 24px; margin: 56px 0 10px; padding-top: 14px; border-top: 1px solid var(--rule); }
+main h2 { font-size: 19px; margin: 36px 0 8px; color: var(--cool); }
+main h3 { font-size: 16px; margin: 24px 0 6px; }
+p, li { max-width: 72ch; }
+a { color: var(--cool); }
+figure { margin: 18px 0 14px; }
+figure img { width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 4px; background: #000; display: block; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+code { font-family: var(--f-mono); font-size: .9em; background: var(--code-bg); padding: 1px 5px; border-radius: 3px; }
+pre { font-family: var(--f-mono); font-size: 13px; line-height: 1.6; background: var(--code-bg); padding: 14px 16px;
+      border-radius: 4px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+.tbl { overflow-x: auto; margin: 14px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--surface); }
+th, td { border: 1px solid var(--rule); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--code-bg); }
+td p, th p { margin: 0; }
+blockquote { margin: 14px 0; padding: 8px 14px; border-left: 3px solid var(--accent); background: var(--surface);
+             border-radius: 0 4px 4px 0; }
+blockquote p { margin: 4px 0; }
+footer { color: var(--muted); font-size: 13px; margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--rule); }
+@media (max-width: 860px) {
+  .intro { padding-left: 16px; padding-top: 24px; }
+  h1.title { font-size: 26px; }
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  nav.toc { position: static; max-height: none; border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px;
+            background: var(--surface); }
+}
+</style>
+</head>
+<body id="top">
+<header class="hero"><a href="https://github.com/nu-sx/HOKULELE"><img src="logo.png" alt="HOKULELE (Hōkūlele) — Meteor Video Spectroscopy Analyzer" width="1600" height="400"></a></header>
+<section class="intro">
+<h1 class="title">Hokulele User Manual</h1>
+<p class="sub">User manual of Hokulele V2.5.1, a meteor spectroscopy analysis software for meteor videos (October 2026). Hōkūlele means “shooting star” in Hawaiian.</p>
+<div class="links" aria-label="Downloads"><a href="docs/Hokulele_Manual_en.pdf">PDF</a><a href="docs/Hokulele_Manual_en.docx">Word</a><a href="https://github.com/nu-sx/HOKULELE/releases/latest">Download the app</a><a href="index.html" hreflang="ja">日本語</a></div>
+<p class="cite">If you use Hokulele in a paper, cite the reference in Section 1.4 and mention it in the acknowledgments.</p>
+</section>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><div class="label">Contents</div><ol><li class="l1"><a href="#s1">1. Overview</a><ol><li><a href="#s1-1">1.1 Main features</a></li><li><a href="#s1-2">1.2 Changes in V2.5</a></li><li><a href="#s1-3">1.3 Changes in V2.4</a></li><li><a href="#s1-4">1.4 Citation and acknowledgment</a></li></ol></li><li class="l1"><a href="#s2">2. Requirements and installation</a><ol><li><a href="#s2-1">2.1 Requirements</a></li><li><a href="#s2-2">2.2 Download</a></li><li><a href="#s2-3">2.3 Installing on Windows</a></li><li><a href="#s2-4">2.4 Installing on macOS</a></li><li><a href="#s2-5">2.5 Starting and quitting</a></li><li><a href="#s2-6">2.6 Display language (English / Japanese)</a></li><li><a href="#s2-7">2.7 Where data is saved</a></li></ol></li><li class="l1"><a href="#s3">3. Window layout and basic operation</a><ol><li><a href="#s3-1">3.1 Main window</a></li><li><a href="#s3-2">3.2 Loupe (mouse-following magnifier)</a></li><li><a href="#s3-3">3.3 Preview playback</a></li><li><a href="#s3-4">3.4 Keyboard shortcuts</a></li></ol></li><li class="l1"><a href="#s4">4. Analysis workflow (quick start)</a><ol><li><a href="#s4-1">4.1 Try the workflow with the spectral analysis demo</a></li><li><a href="#s4-2">4.2 Analysis steps</a></li></ol></li><li class="l1"><a href="#s5">5. Operating each tab</a><ol><li><a href="#s5-1">5.1 Movie tab</a></li><li><a href="#s5-2">5.2 Calib. tab</a></li><li><a href="#s5-3">5.3 Wavelength tab (line identification)</a></li><li><a href="#s5-4">5.4 0th order tab</a></li><li><a href="#s5-5">5.5 1st order tab (spectrum / filter photometry)</a></li><li><a href="#s5-6">5.6 Orbit tab</a></li><li><a href="#s5-7">5.7 Output tab</a></li></ol></li><li class="l1"><a href="#s6">6. Gamma correction and camera models</a></li><li class="l1"><a href="#s7">7. Output files</a><ol><li><a href="#s7-1">7.1 Analysis log (analysis_log.txt)</a></li><li><a href="#s7-2">7.2 Compatibility of calibration data</a></li></ol></li><li class="l1"><a href="#s8">8. FAQ and troubleshooting</a></li><li class="l1"><a href="#app">Appendix</a><ol><li><a href="#appA">Appendix A. Main lines in meteor spectra</a></li><li><a href="#appB">Appendix B. Version history</a></li><li><a href="#appC">Appendix C. Modules (V2.5.1)</a></li></ol></li></ol></nav>
+<main>
+<h1 id="s1">1. Overview</h1>
+<p>Hokulele is a GUI application for photometry and analysis of meteor
+spectra recorded in video observations. From a meteor movie taken with a
+camera fitted with a diffraction grating, it covers the whole analysis:
+the light curve of the zero order (the meteor itself); wavelength
+calibration, sensitivity correction and synthetic filter photometry of
+the first order (the spectrum); and, using astrometric calibration by
+star matching, estimation of the radiant and orbit.</p>
+<p>This is the user manual of Hokulele V2.5.1. Using screenshots of the
+actual windows, it explains each step from loading a movie to analysis
+and output. The examples use the sample movie
+sample_synthetic_meteor.avi (960×480, 30 fps, 60 frames; the meteor
+appears in frames 10–49).</p>
+<h2 id="s1-1">1.1 Main features</h2>
+<ul>
+<li><p>Color / monochrome movies (AVI, MP4, MOV, etc.) and image
+sequences (8/16 bit); ffmpeg is not required</p></li>
+<li><p>13 gamma corrections (RAW, γ=1, 0.35, 0.45, 1/1.9, 1/2.2, 1/2.4,
+BT.709, S-Log2, S-Log3, HLG, Canon Log, V-Log) with camera model
+names</p></li>
+<li><p>Dark correction (frame range in the movie / external file) and
+flat correction</p></li>
+<li><p>Distortion correction (plate constant): concentric-circle chart
+measurement, or star matching with astrometry.net</p></li>
+<li><p>Automatic tracking and aperture photometry of the zero order
+(light curve)</p></li>
+<li><p>Wavelength calibration, sensitivity correction (3 methods) and
+synthetic photometry with UBVRI / SDSS ugriz / custom filters for the
+first order</p></li>
+<li><p>Estimation of the apparent radiant, velocity and heliocentric
+orbital elements (single station, assumed heights)</p></li>
+<li><p>Output of composite spectrum images (maximum / mean) as FITS /
+PNG / JPEG</p></li>
+<li><p>Mouse-following loupe, preview playback, keyboard shortcuts,
+project settings (JSON) and an analysis log</p></li>
+<li><p>Spectral analysis demo: runs the analysis step by step on a
+sample movie</p></li>
+<li><p>English / Japanese display</p></li>
+</ul>
+<h2 id="s1-2">1.2 Changes in V2.5</h2>
+<ul>
+<li><p><strong>English / Japanese display:</strong> The windows,
+messages and headers of output files can now be shown in English. Switch
+with the "言語 / Language" menu in the menu bar (Section 2.6).</p></li>
+<li><p><strong>New download page:</strong> Hokulele is now distributed
+from https://github.com/nu-sx/hokulele. The spectral analysis demo also
+downloads its data from there.</p></li>
+<li><p><strong>English manual:</strong> This English manual
+(Hokulele_Manual_en.docx) is included with the software.</p></li>
+<li><p><strong>Icon (V2.5.1):</strong> New icon showing the
+constellation Leo, a Leonid meteor with its zero- and first-order
+images, and a meteor spectrum.</p></li>
+</ul>
+<h2 id="s1-3">1.3 Changes in V2.4</h2>
+<ul>
+<li><p><strong>Windows / macOS versions:</strong> Hokulele can be
+installed from an installer (Windows) or a dmg (macOS) without setting
+up Python (Chapter 2).</p></li>
+<li><p><strong>Spectral analysis demo:</strong> "Start demo" in the
+Movie tab downloads a sample movie from GitHub and demonstrates the
+analysis from loading to first-order spectral photometry (Section
+4.1).</p></li>
+<li><p><strong>Negative counts:</strong> Negative counts used to be
+clipped to 0 before sensitivity correction, which biased low-S/N
+intensities upward. They are no longer clipped by default; the old
+behavior is available as "Clip negative counts to 0" in the 1st order
+tab.</p></li>
+<li><p><strong>Bug fixes:</strong> The fourth value of distortion files
+(V0.971 format) is now read correctly as the horizontal field of view;
+the G→R channel switching point of sensitivity curves is determined in
+the same way as V0.971; the incidence angle is computed from the
+distance of the zero-order position from the image center.</p></li>
+</ul>
+<h2 id="s1-4">1.4 Citation and
+acknowledgment</h2>
+<p>When you publish results obtained with Hokulele, please cite the
+following paper and mention Hokulele in the acknowledgments.</p>
+<h3 id="reference">Reference</h3>
+<blockquote>
+<p>Abe, S., Ogawa, T., Maeda, K., &amp; Arai, T. (2020). Sodium
+variation in Geminid meteoroids from (3200) Phaethon. <em>Planetary and
+Space Science</em>, <strong>194</strong>, 105040.
+https://doi.org/10.1016/j.pss.2020.105040</p>
+</blockquote>
+<h3 id="example-acknowledgment">Example acknowledgment</h3>
+<blockquote>
+<p>This research made use of Hokulele, a meteor spectroscopy analysis
+software (Abe et al., 2020).</p>
+</blockquote>
+<h1 id="s2">2. Requirements and
+installation</h1>
+<h2 id="s2-1">2.1 Requirements</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>OS</strong></th>
+<th><strong>Requirement</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td>Windows 10 / 11 (64-bit)</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>macOS 12 or later on an Apple silicon (M1 or later) Mac. Intel Macs
+are not supported</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><p>The spectral analysis demo and star matching (astrometry.net)
+need an Internet connection.</p></li>
+</ul>
+<h2 id="s2-2">2.2 Download</h2>
+<p>Download the file for your OS from "Releases" on the following
+page.</p>
+<blockquote>
+<p>https://github.com/nu-sx/hokulele/releases</p>
+</blockquote>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>OS</strong></th>
+<th><strong>File name</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows 10 / 11</td>
+<td>Hokulele-2.5.1-Windows-x64-Setup.exe (installer)</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>Hokulele-2.5.1-macOS-arm64.dmg</td>
+</tr>
+<tr>
+<td>User manual</td>
+<td>Hokulele-2.5.1-Manual-en.docx (English) /
+Hokulele-2.5.1-Manual-ja.docx (Japanese)</td>
+</tr>
+</tbody>
+</table></div>
+<p>SHA256SUMS.txt on the same page lists the checksum of each file. Use
+it to check that a downloaded file is not corrupted.</p>
+<h2 id="s2-3">2.3 Installing on Windows</h2>
+<ol type="1">
+<li><p>Double-click Hokulele-2.5.1-Windows-x64-Setup.exe.</p></li>
+<li><p>If "Windows protected your PC" appears, click "More info" and
+then "Run anyway" (the warning appears because the installer is not
+code-signed).</p></li>
+<li><p>Follow the instructions. By default Hokulele is installed in your
+user folder. You can choose whether to create a desktop icon.</p></li>
+<li><p>Start Hokulele from "Hokulele" in the Start menu. The same folder
+has shortcuts to the user manuals (Japanese / English) and to the
+samples and documents folder.</p></li>
+</ol>
+<p>To uninstall, go to Settings &gt; Apps &gt; Installed apps and select
+Hokulele.</p>
+<h2 id="s2-4">2.4 Installing on macOS</h2>
+<ol type="1">
+<li><p>Double-click Hokulele-2.5.1-macOS-arm64.dmg to open it.</p></li>
+<li><p>Drag Hokulele.app to the "Applications" folder in the same
+window.</p></li>
+<li><p>Open Hokulele in the Applications folder.</p></li>
+<li><p>If macOS says the app cannot be opened because the developer
+cannot be verified, open System Settings &gt; Privacy &amp; Security and
+click "Open Anyway" near the bottom (the warning appears because the app
+is not notarized by Apple).</p></li>
+</ol>
+<p>The dmg also contains the read-me files (English / Japanese), the
+sample movie and the user manuals (English / Japanese).</p>
+<h2 id="s2-5">2.5 Starting and quitting</h2>
+<p>Hokulele starts with the main window in Figure 1. To quit, close the
+window and click "OK" in the confirmation dialog.</p>
+<h2 id="s2-6">2.6 Display language (English
+/ Japanese)</h2>
+<p>Hokulele can be displayed in English or Japanese. On first launch the
+language is chosen automatically from the OS display language.</p>
+<ol type="1">
+<li><p>Open the "言語 / Language" menu in the menu bar (on macOS it is
+in the menu bar at the top of the screen; on Windows it is at the top of
+the window).</p></li>
+<li><p>Choose "English" or "日本語" (Japanese).</p></li>
+<li><p>When asked whether to restart now, click "Yes" to restart
+Hokulele in the new language. If you click "No", the change takes effect
+the next time you start Hokulele.</p></li>
+</ol>
+<ul>
+<li><p>Only the display changes. The analysis methods and the resulting
+numbers do not depend on the language.</p></li>
+<li><p>In English, the header lines of output text files, the analysis
+log and the orbit report are also in English.</p></li>
+<li><p>The setting is saved in Hokulele_data/hokulele_settings.json in
+your home folder.</p></li>
+</ul>
+<blockquote>
+<p>Note: Restarting discards the current analysis. If needed, save the
+project settings first with "Save settings (JSON)".</p>
+</blockquote>
+<h2 id="s2-7">2.7 Where data is saved</h2>
+<ul>
+<li><p>Results are written to the "&lt;movie name&gt;_result" folder
+inside the "Result folder" (set in the Movie tab).</p></li>
+<li><p>The data and results of the spectral analysis demo are saved in
+Hokulele_data/demo in your home folder. You may delete them when no
+longer needed.</p></li>
+</ul>
+<h1 id="s3">3. Window layout and basic
+operation</h1>
+<h2 id="s3-1">3.1 Main window</h2>
+<figure><img src="manual/img/en/fig01.jpg" alt="Main window right after start (Movie tab)" loading="lazy"><figcaption>Figure 1. Main window right after start (Movie tab)</figcaption></figure>
+<p>The main window has two panes. The left pane shows the image; the
+right pane has the analysis tabs (Movie / Calib. / Wavelength / 0th
+order / 1st order / Orbit / Output).</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>Area</strong></th>
+<th><strong>Contents</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Image area</td>
+<td>Shows the current frame or a composite image. Click here for
+measurements (chart intersections, emission lines, zero-order position,
+etc.)</td>
+</tr>
+<tr>
+<td>Frame controls</td>
+<td>← / → buttons, ▶ Play button, frame slider, frame number and elapsed
+time [s]</td>
+</tr>
+<tr>
+<td>Display controls</td>
+<td>Brightness slider, "Show calibrated", "Reset view", "Loupe" check
+box and zoom (x4/x8/x16)</td>
+</tr>
+<tr>
+<td>Status bar</td>
+<td>Shows progress and what to do next</td>
+</tr>
+<tr>
+<td>Pixel value bar</td>
+<td>X, Y coordinates and value under the mouse (R, G, B for color; Count
+for monochrome)</td>
+</tr>
+<tr>
+<td>Toolbar (bottom)</td>
+<td>Standard matplotlib home, back/forward, pan, zoom, subplot settings
+and save image</td>
+</tr>
+<tr>
+<td>Analysis tabs (right)</td>
+<td>Settings and run buttons for each analysis step</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s3-2">3.2 Loupe (mouse-following
+magnifier)</h2>
+<p>When you move the mouse over the image, a small window (the loupe)
+showing a magnified view around the cursor appears at the lower right of
+the cursor (Figure 2). It helps you check faint meteor images and click
+chart intersections, emission lines and the zero order with one-pixel
+accuracy.</p>
+<figure><img src="manual/img/en/fig02.jpg" alt="Zero order of the meteor magnified with the loupe (x8)" loading="lazy"><figcaption>Figure 2. Zero order of the meteor magnified with the loupe (x8)</figcaption></figure>
+<ul>
+<li><p>The crosshair in the center marks the pixel of interest (the
+pixel that will be clicked). The coordinates, value and zoom are shown
+at the bottom.</p></li>
+<li><p>Near the right and bottom edges of the screen the loupe moves to
+the other side automatically.</p></li>
+<li><p>Choose the zoom (x4 / x8 / x16) in the combo box of the display
+controls. Turn it on/off with the "Loupe" check box or the L
+key.</p></li>
+</ul>
+<blockquote>
+<p>Note: The loupe magnifies the displayed image (with brightness and
+"Show calibrated" applied). The pixel values shown are raw counts before
+gamma correction.</p>
+</blockquote>
+<h2 id="s3-3">3.3 Preview playback</h2>
+<p>The ▶ Play button (or the Space key) plays the movie from the current
+frame. While playing, the button changes to ■ Stop; playback stops
+automatically at the last frame.</p>
+<h2 id="s3-4">3.4 Keyboard shortcuts</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>Key</strong></th>
+<th><strong>Action</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>← / →</td>
+<td>Back / forward 1 frame</td>
+</tr>
+<tr>
+<td>Shift + ← / →</td>
+<td>Back / forward 10 frames</td>
+</tr>
+<tr>
+<td>Home / End</td>
+<td>First / last frame</td>
+</tr>
+<tr>
+<td>Space</td>
+<td>Preview play / stop</td>
+</tr>
+<tr>
+<td>S / E</td>
+<td>Photometry range start / end = current frame</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Loupe on / off</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Note: Shortcuts do not work while the cursor is in a text box. Click
+the image or a slider first.</p>
+</blockquote>
+<h1 id="s4">4. Analysis workflow (quick
+start)</h1>
+<h2 id="s4-1">4.1 Try the
+workflow with the spectral analysis demo</h2>
+<p>When you use Hokulele for the first time, we recommend running the
+spectral analysis demo. Using a sample movie, it demonstrates the steps
+from loading the movie to first-order spectral photometry and displaying
+the results, with the same operations as in normal use.</p>
+<ol type="1">
+<li><p>Click "Start demo" under "Spectral analysis demo" at the bottom
+of the Movie tab. The demo window in Figure 3 opens.</p></li>
+<li><p>Click "Next ▶" to advance one step at a time. The description of
+each step appears at the bottom of the demo window, and the
+corresponding tab opens and is operated in the main window. Click
+positions are first shown as cyan × marks and then confirmed (Figure
+4).</p></li>
+<li><p>Click "Run all" to run the remaining steps in sequence.</p></li>
+<li><p>When all steps are done, each step is marked "✓ Done" (Figure 5).
+Use "Open result folder" to look at the spectrum text files and the
+analysis log.</p></li>
+</ol>
+<figure><img src="manual/img/en/fig03.jpg" alt="Spectral analysis demo window (before starting)" loading="lazy"><figcaption>Figure 3. Spectral analysis demo window (before starting)</figcaption></figure>
+<figure><img src="manual/img/en/fig04.jpg" alt="Demo in progress (measuring the spectrum tilt)" loading="lazy"><figcaption>Figure 4. Demo in progress (measuring the spectrum tilt)</figcaption></figure>
+<figure><img src="manual/img/en/fig05.jpg" alt="Demo complete (the 1st order tab shows the spectral photometry result)" loading="lazy"><figcaption>Figure 5. Demo complete (the 1st order tab shows the spectral photometry result)</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>Step</strong></th>
+<th><strong>Contents</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Get demo data</td>
+<td>Downloads the sample movie and analysis parameters from GitHub
+(nu-sx/hokulele). From the second run on, the saved data is reused</td>
+</tr>
+<tr>
+<td>2–3. Movie, photometry range</td>
+<td>Opens the movie and sets the photometry range to frames 10–49</td>
+</tr>
+<tr>
+<td>4. Calibration</td>
+<td>γ = RAW, dark = frames 0–8, horizontal FOV 60°</td>
+</tr>
+<tr>
+<td>5–8. Wavelength calibration</td>
+<td>Max composite, emission line tilt, photometry band, line
+identification (Na I D 589.16 nm, Mg I b 517.27 nm)</td>
+</tr>
+<tr>
+<td>9. Zero-order tracking</td>
+<td>Tracks the meteor automatically with aperture photometry</td>
+</tr>
+<tr>
+<td>10–11. First order</td>
+<td>No sensitivity correction; synthetic photometry in B, V and R; shows
+the light curves and the mean spectrum</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>Note: The demo needs an Internet connection (about 1 MB is downloaded
+the first time). Starting the demo discards the current analysis. The
+demo results are saved in Hokulele_data/demo in your home folder.</p>
+</blockquote>
+<h2 id="s4-2">4.2 Analysis steps</h2>
+<p>A standard analysis goes as follows. See Chapter 5 for details of
+each step.</p>
+<ol type="1">
+<li><p>[Movie tab] Set the load options, open the movie (or image
+sequence), and check the fps and the result folder.</p></li>
+<li><p>[Movie tab] Set the frame range in which the meteor appears as
+the photometry range (S / E keys also work).</p></li>
+<li><p>[Calib. tab] Choose the gamma correction for your camera (see
+Chapter 6).</p></li>
+<li><p>[Calib. tab] Set the dark and flat.</p></li>
+<li><p>[Calib. tab] Set the distortion correction (chart measurement or
+star matching) and the horizontal field of view. Star matching is
+required for orbit estimation.</p></li>
+<li><p>[Calib. tab] Measure the grating tilt (dispersion axis).</p></li>
+<li><p>[Wavelength tab] Calibrate the wavelength: max composite →
+spectrum tilt → photometry band → line identification.</p></li>
+<li><p>[0th order tab] Click the meteor, run tracking + aperture
+photometry, and save the light curve.</p></li>
+<li><p>[1st order tab] Set the sensitivity curve and filters and run the
+photometry.</p></li>
+<li><p>[Orbit tab] Enter the site, UTC time and assumed heights, and
+estimate the radiant and orbital elements.</p></li>
+<li><p>[Output tab] Save composite spectrum images as FITS / PNG /
+JPEG.</p></li>
+<li><p>[Movie tab] Save the project settings with "Save settings (JSON)"
+to reuse them in the next analysis.</p></li>
+</ol>
+<h1 id="s5">5. Operating each tab</h1>
+<h2 id="s5-1">5.1 Movie tab</h2>
+<h3 id="load-options">Load options</h3>
+<ul>
+<li><p>Analyze in grayscale: analyzes a color movie using luminance
+only.</p></li>
+<li><p>Rotate 90°: turns a movie whose dispersion is vertical into a
+horizontal one (the dispersion axis is assumed horizontal).</p></li>
+<li><p>Trim range [s]: loads only part of a long movie (blank = whole
+movie).</p></li>
+</ul>
+<blockquote>
+<p>Note: Set these options before opening the movie.</p>
+</blockquote>
+<h3 id="opening-a-movie">Opening a movie</h3>
+<p>"Open movie file (avi, etc.)" loads AVI / MP4 / MOV / MKV / WMV /
+M2TS, etc.; "Open image sequence folder" loads a sequence of still
+images (including 16-bit TIFF/PNG). After loading, the file name,
+resolution, number of frames, color/gray and bit depth are shown (Figure
+6).</p>
+<figure><img src="manual/img/en/fig06.jpg" alt="Sample movie loaded (frame 30)" loading="lazy"><figcaption>Figure 6. Sample movie loaded (frame 30)</figcaption></figure>
+<h3 id="frame-rate-and-result-folder">Frame rate and result folder</h3>
+<p>The fps is read from the movie. For image sequences, or if you know
+the exact value, enter it and click "Set". The fps directly affects the
+times of the light curves and the velocities in the orbit estimate.
+Results are written to "&lt;Result folder&gt;/&lt;movie
+name&gt;_result/".</p>
+<h3 id="photometry-range-frames">Photometry range (frames)</h3>
+<p>Set the range of frames in which the meteor appears. Move to the
+first frame of the meteor with the slider (or ← / →) and click
+"Start=current frame", then move to the last frame and click
+"End=current frame" (or use the S / E keys). The range is shown on the
+right (Figure 7).</p>
+<figure><img src="manual/img/en/fig07.jpg" alt="Photometry range set to 10–49" loading="lazy"><figcaption>Figure 7. Photometry range set to 10–49</figcaption></figure>
+<h3 id="saving-loading-project-settings">Saving / loading project
+settings</h3>
+<p>"Save settings (JSON)" saves the gamma setting, result folder,
+sensitivity curve, photometry range, fps, distortion coefficients,
+grating tilt, observing site and load options to a JSON file. "Load
+settings" restores them (load them after opening the movie).</p>
+<blockquote>
+<p>Note: The dark/flat file selections and the wavelength calibration
+are not included. Use "Save cal. / Load cal." in the Wavelength tab for
+the wavelength calibration.</p>
+</blockquote>
+<h3 id="spectral-analysis-demo">Spectral analysis demo</h3>
+<p>"Start demo" starts the spectral analysis demo (Section 4.1).</p>
+<h2 id="s5-2">5.2 Calib. tab</h2>
+<figure><img src="manual/img/en/fig08.jpg" alt="Calib. tab (dark: frames 0–8 of the movie, horizontal FOV 60°)" loading="lazy"><figcaption>Figure 8. Calib. tab (dark: frames 0–8 of the movie, horizontal FOV 60°)</figcaption></figure>
+<h3 id="gamma-correction">Gamma correction</h3>
+<p>Choose the setting for your camera from the drop-down list and click
+"Set". A description with the supported camera models appears below. See
+Chapter 6 for details.</p>
+<h3 id="dark-image">Dark image</h3>
+<ul>
+<li><p>From the movie: move to frames before the meteor and click
+"Start=current" and "End=current"; the mean of that range becomes the
+dark (the sky background is subtracted at the same time).</p></li>
+<li><p>Select external file: a FITS file written by Hokulele is
+recommended (PNG/TIFF etc. also work).</p></li>
+<li><p>Off: turns off dark correction.</p></li>
+</ul>
+<h3 id="flat-image">Flat image</h3>
+<p>A FITS file normalized to a maximum of 1 is recommended (create one
+with "Output with maximum = 1" in the Output tab).</p>
+<h3 id="distortion-correction-plate-constant">Distortion correction
+(plate constant)</h3>
+<p>Radial distortion is corrected with the Brown model r_obs = r_true (1
++ k1 r² + k2 r⁴ + k3 r⁶). The current coefficients, focal length,
+horizontal field of view, method and WCS status are shown at the top of
+the frame.</p>
+<ul>
+<li><p><strong>Chart measurement:</strong> On an image of a
+concentric-circle chart, click "Chart measurement" to open the small
+window in Figure 9. Click the intersections of the circles with the
+radial lines, starting from the innermost circle (clicks are shown as
+cyan × marks); click "Next circle" for each circle and "Finish" at the
+end to fit k1, k2 and k3 (at least four circles are required). With this
+method, enter the horizontal field of view [deg] and click
+"Set".</p></li>
+<li><p><strong>Star matching (astrometry.net):</strong> This opens the
+dialog in Figure 10. Enter your API key (nova.astrometry.net → My
+Profile → API key) and click "Run plate solve". The max composite (or
+the current frame) is plate-solved, and the focal length, distortion
+coefficients and horizontal field of view are set from the WCS. The WCS
+is also used for orbit estimation.</p></li>
+</ul>
+<figure><img src="manual/img/en/fig09.jpg" alt="Chart measurement (clicking intersections; the control window is at the lower left)" loading="lazy"><figcaption>Figure 9. Chart measurement (clicking intersections; the control window is at the lower left)</figcaption></figure>
+<figure><img src="manual/img/en/fig10.jpg" alt="Star matching (astrometry.net) dialog" loading="lazy"><figcaption>Figure 10. Star matching (astrometry.net) dialog</figcaption></figure>
+<p>The results can be saved and reused as V0.971-compatible text (k1,
+k2, k3, ff) with "Save" and "Open". "Reset" resets the coefficients, and
+"Load WCS (wcs.fits)" loads a saved WCS.</p>
+<h3 id="grating-tilt-dispersion-axis">Grating tilt (dispersion
+axis)</h3>
+<p>Click "Start", click several feature points on the center line of one
+spectrum, and click "Finish". The tilt of the dispersion axis is
+obtained by a straight-line fit.</p>
+<h2 id="s5-3">5.3 Wavelength tab (line
+identification)</h2>
+<h3 id="step-1-prepare-the-composite-image">Step 1: Prepare the
+composite image</h3>
+<p>Click "Show max composite of photometry range" to show the maximum
+(lighten) composite of the frames in the photometry range (Figure 11).
+The white trail is the zero order (the meteor itself); the colored
+trails on the right are the emission lines of the first-order spectrum.
+To use an image of a calibration lamp, click "Load line FITS".</p>
+<figure><img src="manual/img/en/fig11.jpg" alt="Max composite of the photometry range" loading="lazy"><figcaption>Figure 11. Max composite of the photometry range</figcaption></figure>
+<h3 id="step-2-spectrum-emission-line-tilt">Step 2: Spectrum (emission
+line) tilt</h3>
+<p>Click "Start (click several points on one line)", click several
+points on the trail of one emission line (cyan × in Figure 12), and
+click "Finish". The tilt is shown on the right.</p>
+<figure><img src="manual/img/en/fig12.jpg" alt="Measuring the tilt with four clicks on one emission line" loading="lazy"><figcaption>Figure 12. Measuring the tilt with four clicks on one emission line</figcaption></figure>
+<h3 id="step-3-photometry-band">Step 3: Photometry band</h3>
+<p>Click "Start (click top and bottom)", click the top and bottom edges
+of the spectrum with some margin (Figure 13), and click "Finish".</p>
+<figure><img src="manual/img/en/fig13.jpg" alt="Setting the top and bottom of the photometry band" loading="lazy"><figcaption>Figure 13. Setting the top and bottom of the photometry band</figcaption></figure>
+<h3 id="step-4-line-identification">Step 4: Line identification</h3>
+<p>Click "Show profile → identify lines" to open the line identification
+window in Figure 14. The graph shows the counts in the band at each
+pixel position (the large peak on the left is the zero order).</p>
+<ol type="1">
+<li><p>Click a peak in the graph; the marker snaps to the nearest
+maximum and a red dot is shown (fine-tune with the ≪ &lt; &gt; ≫
+buttons).</p></li>
+<li><p>Enter the wavelength in "Wavelength [nm]", or choose it from the
+drop-down list on the right (reference lines).</p></li>
+<li><p>Click "Set wavelength (this peak)" to register the calibration
+point; a green vertical line and the wavelength are shown. Remove a
+wrong point with "Delete 1 point".</p></li>
+<li><p>After registering two or more points (four or more recommended),
+click "Calibrate (fit)". With four or more points a quadratic λ = ax² +
+bx + c is fitted, with two or three points a linear one, and the
+horizontal axis switches to wavelength [nm] (Figure 15).</p></li>
+<li><p>Click "Finish" to close the window.</p></li>
+</ol>
+<figure><img src="manual/img/en/fig14.jpg" alt="Line identification window (Na I D 589.2 nm registered; selecting the Mg I b peak)" loading="lazy"><figcaption>Figure 14. Line identification window (Na I D 589.2 nm registered; selecting the Mg I b peak)</figcaption></figure>
+<figure><img src="manual/img/en/fig15.jpg" alt="After calibration (the horizontal axis is wavelength [nm])" loading="lazy"><figcaption>Figure 15. After calibration (the horizontal axis is wavelength [nm])</figcaption></figure>
+<p>When the calibration is done, the fit equation, the linear
+approximation, the zero-order position x0, the list of calibration
+points and the RMS residual are shown in the Wavelength tab (Figure 16)
+and recorded in the analysis log. If the RMS residual is clearly larger
+than the wavelength resolution, check for misidentified lines or add
+calibration points.</p>
+<figure><img src="manual/img/en/fig16.jpg" alt="Wavelength tab after calibration" loading="lazy"><figcaption>Figure 16. Wavelength tab after calibration</figcaption></figure>
+<blockquote>
+<p>Note: The example uses only two points (linear fit) because it is a
+sample movie. Four or more points are recommended for real data. Reuse a
+calibration with "Save cal. / Load cal." (format [a, b, c, lin_a,
+lin_b]).</p>
+</blockquote>
+<h2 id="s5-4">5.4 0th order tab</h2>
+<p>Tracks the meteor (zero order) automatically and obtains its light
+curve by aperture photometry.</p>
+<ol type="1">
+<li><p>Adjust the tracking parameters (search radius, aperture radius,
+background inner/outer radius, minimum SNR) if needed.</p></li>
+<li><p>Click "Click the position in the start frame"; the first frame of
+the photometry range is shown. Click the meteor (cyan × in Figure 17).
+The loupe helps you aim at the center.</p></li>
+<li><p>Click "Confirm position"; the initial position is shown on the
+right.</p></li>
+<li><p>Click "Run tracking + photometry (photometry range)" to track the
+meteor with centroiding and linear prediction. The track is drawn in
+orange and the number of detections is shown (Figure 18).</p></li>
+<li><p>Click "Show light curve" to see the net counts and instrumental
+magnitudes over time (Figure 19).</p></li>
+<li><p>Click "Save text" to write zeroorder_lightcurve.txt.</p></li>
+</ol>
+<figure><img src="manual/img/en/fig17.jpg" alt="Clicking the initial zero-order position in the start frame (10)" loading="lazy"><figcaption>Figure 17. Clicking the initial zero-order position in the start frame (10)</figcaption></figure>
+<figure><img src="manual/img/en/fig18.jpg" alt="Tracking complete (40 of 40 frames detected; the orange line is the track)" loading="lazy"><figcaption>Figure 18. Tracking complete (40 of 40 frames detected; the orange line is the track)</figcaption></figure>
+<figure><img src="manual/img/en/fig19.jpg" alt="Zero-order light curve (top: net counts, bottom: instrumental magnitude)" loading="lazy"><figcaption>Figure 19. Zero-order light curve (top: net counts, bottom: instrumental magnitude)</figcaption></figure>
+<h2 id="s5-5">5.5 1st order tab
+(spectrum / filter photometry)</h2>
+<h3 id="sensitivity-curve-method">Sensitivity curve method</h3>
+<p>Choose, with the radio buttons, how the counts of the spectrum are
+converted to relative intensity, according to your grating.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>Method</strong></th>
+<th><strong>Use / description</strong></th>
+<th><strong>Input</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p>Incidence-angle correction</p>
+<p>(thick grating)</p></td>
+<td>For gratings whose efficiency depends on the position in the field.
+Sensitivity curves per incidence angle are interpolated linearly between
+angles</td>
+<td>Set with "Set folder". File names are "&lt;incidence angle
+[deg]&gt;.txt" (e.g. 0.0.txt, 30.0.txt)</td>
+</tr>
+<tr>
+<td><p>Common sensitivity curve</p>
+<p>(sheet grating)</p></td>
+<td>For gratings with little incidence-angle dependence. One sensitivity
+curve is applied to the whole field</td>
+<td>"Select file": 2-column text [wavelength(nm) relative sensitivity]
+(4 columns [wavelength R G B] also accepted)</td>
+</tr>
+<tr>
+<td>No sensitivity correction</td>
+<td>Uses counts as intensity (R+G+B for color). For preliminary analysis
+and line checks</td>
+<td>None. Wavelength range defaults to 300–1100 nm</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="photometry-settings-and-running">Photometry settings and
+running</h3>
+<ul>
+<li><p>Dispersion is right to left: flips the sign of the incidence
+angle.</p></li>
+<li><p>Clip negative counts to 0: the same processing as V0.971 / V2.3.
+Off by default (clipping biases low-S/N intensities upward).</p></li>
+<li><p>Output count values: writes [wavelength, R, G, B] without
+sensitivity correction (for making sensitivity curves). λ min / λ max
+must be entered.</p></li>
+<li><p>Follow the zero-order track: shifts the wavelength origin to the
+zero-order position in each frame (requires zero-order
+tracking).</p></li>
+<li><p>Filter selection: choose any of Johnson-Cousins U B V R I / SDSS
+u g r i z. "Load custom filter" adds a [wavelength nm, transmission]
+text file.</p></li>
+</ul>
+<p>Click "Start photometry (per-frame spectra + bands)"; the output
+folder is shown when it finishes (Figure 20). "Show band light curves"
+shows the light curve of each band and the mean spectrum (Figure
+21).</p>
+<figure><img src="manual/img/en/fig20.jpg" alt="1st order tab (no sensitivity correction, B, V, R selected, photometry done)" loading="lazy"><figcaption>Figure 20. 1st order tab (no sensitivity correction, B, V, R selected, photometry done)</figcaption></figure>
+<figure><img src="manual/img/en/fig21.jpg" alt="Band light curves (top) and mean spectrum of the photometry range (bottom)" loading="lazy"><figcaption>Figure 21. Band light curves (top) and mean spectrum of the photometry range (bottom)</figcaption></figure>
+<blockquote>
+<p>Note: Magnitudes are instrumental (-2.5 log10 flux). Calibration to
+standard magnitudes needs a separate zero point from standard stars.</p>
+</blockquote>
+<h2 id="s5-6">5.6 Orbit tab</h2>
+<p>Estimates the apparent radiant, velocity and heliocentric orbital
+elements from the zero-order track and the WCS (star matching).</p>
+<figure><img src="manual/img/en/fig22.jpg" alt="Orbit tab" loading="lazy"><figcaption>Figure 22. Orbit tab</figcaption></figure>
+<ul>
+<li><p>Requirements: zero-order tracking has been run and a WCS is
+available (star matching or loaded WCS).</p></li>
+<li><p>Input: latitude, longitude and elevation of the site; UTC time of
+the first frame of the photometry range (ISO format, e.g.
+2026-01-01T15:00:00); assumed start/end heights of the meteor (default
+100 / 85 km).</p></li>
+<li><p>"Estimate radiant &amp; orbit" shows the results in the text box
+below: apparent / rotation-corrected / geocentric radiant (RA, Dec),
+observed velocity, v∞, vg, heliocentric velocity and orbital elements a,
+e, q, i, Ω, ω.</p></li>
+<li><p>"Save report" writes orbit_report.txt.</p></li>
+</ul>
+<blockquote>
+<p>Note: With a single station, distance and velocity depend on the
+assumed heights. If you have multi-station data, enter the measured
+heights.</p>
+</blockquote>
+<h2 id="s5-7">5.7 Output tab</h2>
+<figure><img src="manual/img/en/fig23.jpg" alt="Output tab" loading="lazy"><figcaption>Figure 23. Output tab</figcaption></figure>
+<ul>
+<li><p>Composite method: mean / maximum (comp).</p></li>
+<li><p>Output format: FITS (floating point) / PNG (8 bit) / JPEG (8
+bit).</p></li>
+<li><p>"Output with maximum = 1" is for making flat images.</p></li>
+<li><p>Images written with "Apply distortion correction to output"
+cannot be used as dark/flat.</p></li>
+<li><p>"Image output (photometry range)" writes the composite of the
+photometry range; "Output current frame" writes a single frame.</p></li>
+</ul>
+<h1 id="s6">6. Gamma correction and
+camera models</h1>
+<p>Most cameras compress the tonal range (gamma / log curve) when
+recording. Photometry needs linear counts, so Hokulele applies the
+inverse of the selected gamma setting to every frame.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>No.</strong></th>
+<th><strong>Setting</strong></th>
+<th><strong>Inverse transform</strong></th>
+<th><strong>Example cameras / recording settings</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>RAW (scientific camera)</td>
+<td>None</td>
+<td>RAW output of ZWO ASI, QHY, Basler, FLIR, cooled CCDs, etc.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>γ=1 (linear)</td>
+<td>Normalize to 0–1 only</td>
+<td>Industrial cameras with gamma OFF, Watec γ=1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>γ=0.35 (Watec LO)</td>
+<td>out = in^(1/0.35)</td>
+<td>Watec gamma LO (WAT-902H2, WAT-910HX, etc.)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>γ=0.45 (Watec HI / NTSC)</td>
+<td>out = in^(1/0.45)</td>
+<td>Watec gamma HI / default of many analog CCDs</td>
+</tr>
+<tr>
+<td>4</td>
+<td>γ=1/1.9</td>
+<td>out = in^1.9</td>
+<td>Consumer video cameras with γ≈1/1.9</td>
+</tr>
+<tr>
+<td>5</td>
+<td>γ=1/2.2 (sRGB-like)</td>
+<td>out = in^2.2</td>
+<td>JPEG / stills of ordinary digital cameras</td>
+</tr>
+<tr>
+<td>6</td>
+<td>γ=1/2.4 (BT.1886)</td>
+<td>out = in^2.4</td>
+<td>Video based on BT.1886</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ITU-R BT.709 (HD video)</td>
+<td>Inverse BT.709 OETF</td>
+<td>Standard HD video cameras, Canon EOS movies, ME20F-SH Normal</td>
+</tr>
+<tr>
+<td>8</td>
+<td>S-Log2 (Sony α)</td>
+<td>Inverse S-Log2</td>
+<td>PP7 on Sony α7S/α7SII/α7III, FS7, FS5</td>
+</tr>
+<tr>
+<td>9</td>
+<td>S-Log3 (Sony α/FX)</td>
+<td>Inverse S-Log3</td>
+<td>Sony α7SIII, α7IV, α1, FX3, FX6, FX30, etc.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>HLG (BT.2100)</td>
+<td>Inverse HLG OETF</td>
+<td>PP10 on Sony α, LUMIX HLG, GoPro HDR, etc.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Canon Log (ME20F/EOS)</td>
+<td>Inverse Canon Log</td>
+<td>ME20F-SH Canon Log, EOS R5/R6/R3 C-Log, Cinema EOS</td>
+</tr>
+<tr>
+<td>12</td>
+<td>V-Log (Panasonic)</td>
+<td>Inverse V-Log</td>
+<td>LUMIX GH5/GH5S/GH6, S1/S1H/S5, BGH1, etc.</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><p>The effective gamma depends on the model, firmware and picture
+profile. The table is a guide.</p></li>
+<li><p>Sony α: PP OFF / stills → No. 5–7, PP7 → No. 8, PP8/PP9 → No. 9,
+PP10 → No. 10.</p></li>
+<li><p>Log video recorded in 8 bit has coarse shadow tones, and
+quantization noise is amplified after the inverse transform. Record in
+10 bit or more if possible.</p></li>
+<li><p>Always click "Set" after changing the gamma setting. The
+calibration cache is discarded and later analysis uses the new
+setting.</p></li>
+</ul>
+<h1 id="s7">7. Output files</h1>
+<p>Results are written to the "&lt;Result folder&gt;/&lt;movie
+name&gt;_result/" folder.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>File name</strong></th>
+<th><strong>Contents</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zeroorder_lightcurve.txt</td>
+<td>Zero-order light curve: frame, time, x, y, count, bg, SNR, mag, RA,
+Dec, R, G, B</td>
+</tr>
+<tr>
+<td>spectrum_#####.txt</td>
+<td>Spectrum of each frame [wavelength nm, intensity] (R, G, B in count
+mode)</td>
+</tr>
+<tr>
+<td>spectrum_mean_st-en.txt</td>
+<td>Mean spectrum of the photometry range</td>
+</tr>
+<tr>
+<td>band_lightcurve_&lt;filt&gt;.txt</td>
+<td>Synthetic band photometry: frame, time, flux, mag_inst,
+coverage</td>
+</tr>
+<tr>
+<td>orbit_report.txt</td>
+<td>Radiant, velocity and orbital element report</td>
+</tr>
+<tr>
+<td>&lt;name&gt;_mean / comp .fits/.png/.jpg</td>
+<td>Mean / maximum composite spectrum images</td>
+</tr>
+<tr>
+<td>&lt;name&gt;_settings.json</td>
+<td>Project settings (saved wherever you choose)</td>
+</tr>
+<tr>
+<td>analysis_log.txt</td>
+<td>Analysis log (appended automatically)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="s7-1">7.1 Analysis log
+(analysis_log.txt)</h2>
+<p>The main operations are appended automatically. Each time a movie is
+opened a new session starts, and the movie information, gamma, dark,
+flat, distortion correction, grating tilt, wavelength calibration
+equation and RMS residual, sensitivity curve, zero-order tracking,
+spectral photometry, orbit estimate and image output are recorded with
+time stamps.</p>
+<h2 id="s7-2">7.2 Compatibility of
+calibration data</h2>
+<ul>
+<li><p>Distortion coefficient files ([k1, k2, k3, ff]) and the
+sensitivity curve folder format are compatible with V0.971.</p></li>
+<li><p>The wavelength calibration is saved as [a, b, c, lin_a, lin_b]
+(V2 format).</p></li>
+<li><p>Settings JSON files of V2.2 / V2.3 can be loaded as they
+are.</p></li>
+<li><p>Files written in English and in Japanese mode have the same
+numeric format; only comment/header lines differ.</p></li>
+</ul>
+<h1 id="s8">8. FAQ and troubleshooting</h1>
+<h3 id="q1">Q1. I want to
+use Hokulele in Japanese (or English)</h3>
+<p>Switch with the "言語 / Language" menu in the menu bar and restart
+(Section 2.6).</p>
+<h3 id="q2">Q2. The loupe does not
+appear</h3>
+<p>Check that "Loupe" is on and a movie is loaded. The loupe hides when
+the mouse leaves the image area. The L key also toggles it.</p>
+<h3 id="q3">Q3. Shortcuts do not work</h3>
+<p>They are disabled while a text box has the focus. Click the image or
+a slider first.</p>
+<h3 id="q4">Q4. I do not
+know which gamma setting to choose</h3>
+<p>See the table in Chapter 6. If unsure, a practical way is to compare
+the linearity between magnitude and log counts of stars in the field for
+each setting, and use the most linear one.</p>
+<h3 id="q5">Q5. Star matching fails</h3>
+<p>Check that enough stars are visible (a max composite is recommended),
+that the approximate field of view is not far off, and the API key and
+Internet connection. It takes from tens of seconds to a few minutes.</p>
+<h3 id="q6">Q6. The orbit estimate looks
+wrong</h3>
+<p>The usual causes are input errors in the UTC time or site
+coordinates, a wrong fps, or poor assumed heights.</p>
+<h3 id="q7">Q7. A movie cannot be opened</h3>
+<p>The codec may not be supported by OpenCV. Convert it to AVI (MJPEG)
+or MP4 (H.264). Load 16-bit data as an image sequence.</p>
+<h3 id="q8">Q8. "Another process is
+running" appears</h3>
+<p>Wait until the background process (loading, tracking, photometry,
+etc.) finishes. Progress is shown in the status bar.</p>
+<h3 id="q9">Q9. Which
+sensitivity curve method should I choose?</h3>
+<p>Choose "Common sensitivity curve" for sheet gratings,
+"Incidence-angle correction" for thick gratings (e.g. blazed gratings),
+and "No sensitivity correction" for preliminary analysis without a
+sensitivity curve.</p>
+<h3 id="q10">Q10. Windows shows
+"Windows protected your PC"</h3>
+<p>It appears because the installer is not code-signed. Click "More
+info" and then "Run anyway".</p>
+<h3
+id="q11.-macos-says-the-developer-cannot-be-verified-and-the-app-does-not-open">Q11.
+macOS says the developer cannot be verified and the app does not
+open</h3>
+<p>Click "Open Anyway" in System Settings &gt; Privacy &amp; Security
+(Section 2.4).</p>
+<h3 id="q12">Q12. The
+demo says "Could not get the demo information"</h3>
+<p>Check your Internet connection. If the data has been downloaded once,
+the demo also runs offline with the saved data.</p>
+<h1 id="app">Appendix</h1>
+<h2 id="appA">Appendix A. Main lines
+in meteor spectra</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>Line</strong></th>
+<th><strong>Wavelength [nm]</strong></th>
+<th><strong>Line</strong></th>
+<th><strong>Wavelength [nm]</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ca II K</td>
+<td>393.37</td>
+<td>Fe I (15)</td>
+<td>526.95</td>
+</tr>
+<tr>
+<td>Ca II H</td>
+<td>396.85</td>
+<td>O I</td>
+<td>557.73</td>
+</tr>
+<tr>
+<td>Ca I</td>
+<td>422.67</td>
+<td>Na I D</td>
+<td>589.16</td>
+</tr>
+<tr>
+<td>Fe I (42)</td>
+<td>430.79</td>
+<td>N2 (1PG)</td>
+<td>around 650.0</td>
+</tr>
+<tr>
+<td>Fe I (41)</td>
+<td>441.51</td>
+<td>Hα</td>
+<td>656.28</td>
+</tr>
+<tr>
+<td>Mg I (2)</td>
+<td>448.11</td>
+<td>N I</td>
+<td>746.83</td>
+</tr>
+<tr>
+<td>Mg I b</td>
+<td>517.27</td>
+<td>O I</td>
+<td>777.42 / 844.64</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="appB">Appendix B. Version history</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>Version</strong></th>
+<th><strong>Changes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V0.971 (2021/04)</td>
+<td>Movie extraction with ffmpeg, 10 gamma corrections, chart distortion
+measurement, spectrum text output</td>
+</tr>
+<tr>
+<td>V2.0 (v1.0)</td>
+<td>Direct loading with OpenCV, star matching, zero-order tracking +
+aperture photometry, UBVRI/SDSS synthetic photometry, radiant and orbit
+estimation, FITS/PNG/JPEG output</td>
+</tr>
+<tr>
+<td>V2.1 (v1.1)</td>
+<td>Loupe, camera model names for gamma settings and HLG / Canon Log /
+V-Log, shortcuts, preview playback, elapsed time, settings JSON</td>
+</tr>
+<tr>
+<td>V2.2 (v1.2)</td>
+<td>Choice of sensitivity curve method (3 methods), analysis log,
+display and header output of the wavelength calibration equation</td>
+</tr>
+<tr>
+<td>V2.3 (v1.3)</td>
+<td>Code reorganized into the hokulele/ package (multiple modules).
+Features, operation and results unchanged from v1.2</td>
+</tr>
+<tr>
+<td>V2.4</td>
+<td>Windows / macOS versions, spectral analysis demo, negative counts
+not clipped by default, fixes for distortion files, sensitivity channel
+switching and incidence angle</td>
+</tr>
+<tr>
+<td>V2.4.1</td>
+<td>Manual updated for V2.4 screens, citation and acknowledgment added,
+demo text corrected</td>
+</tr>
+<tr>
+<td>V2.5.1</td>
+<td>New icon (Leo, zero/first-order meteor images, meteor spectrum)</td>
+</tr>
+<tr>
+<td>V2.5</td>
+<td>English / Japanese display, distribution moved to nu-sx/hokulele,
+English manual</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="appC">Appendix C. Modules (V2.5.1)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th><strong>Module</strong></th>
+<th><strong>Role</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>constants</td>
+<td>Constants, line list, filter curves, gamma settings</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td>Camera gamma correction</td>
+</tr>
+<tr>
+<td>distortion</td>
+<td>Brown distortion model, celestial coordinate utilities</td>
+</tr>
+<tr>
+<td>calib_io</td>
+<td>Loading dark/flat images</td>
+</tr>
+<tr>
+<td>frame_source</td>
+<td>Movie/image-sequence frame source and calibration pipeline</td>
+</tr>
+<tr>
+<td>astrometry</td>
+<td>Plate solving with astrometry.net</td>
+</tr>
+<tr>
+<td>tracker</td>
+<td>Zero-order tracking and aperture photometry</td>
+</tr>
+<tr>
+<td>spectrum</td>
+<td>Spectrum extraction, wavelength calibration, sensitivity correction,
+filter photometry</td>
+</tr>
+<tr>
+<td>orbit</td>
+<td>Radiant, velocity and orbital element estimation</td>
+</tr>
+<tr>
+<td>output</td>
+<td>FITS/PNG/JPEG/text output</td>
+</tr>
+<tr>
+<td>utils</td>
+<td>Small GUI helpers</td>
+</tr>
+<tr>
+<td>gui_wavecal</td>
+<td>Wavelength calibration (line identification) window</td>
+</tr>
+<tr>
+<td>demo</td>
+<td>Getting the demo data (download from GitHub and cache)</td>
+</tr>
+<tr>
+<td>gui_demo</td>
+<td>Spectral analysis demo window</td>
+</tr>
+<tr>
+<td>i18n / i18n_en</td>
+<td>Display language switching and the English translation table</td>
+</tr>
+<tr>
+<td>gui_app</td>
+<td>Main GUI (HokuleleApp) and entry function main()</td>
+</tr>
+</tbody>
+</table></div>
+
+<footer>Abe Laboratory, Department of Aerospace Engineering, Nihon University · <a href="https://github.com/nu-sx/HOKULELE">https://github.com/nu-sx/HOKULELE</a> · <a href="#top">Back to top</a></footer>
+</main>
+</div>
+</body>
+</html>

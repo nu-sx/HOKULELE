@@ -33,11 +33,12 @@ dmg を開き、`Hokulele.app` を「アプリケーション」フォルダへ�
 
 ## 使用マニュアル
 
-- [Hokulele_使用マニュアル.docx](docs/Hokulele_使用マニュアル.docx) (日本語、Word 形式)
-- [Hokulele_Manual_en.docx](docs/Hokulele_Manual_en.docx) (English, Word)
+- **Web 版:** [日本語](https://nu-sx.github.io/HOKULELE/) / [English](https://nu-sx.github.io/HOKULELE/en.html)
+- **PDF 版:** [Hokulele_使用マニュアル.pdf](docs/Hokulele_使用マニュアル.pdf) (日本語) / [Hokulele_Manual_en.pdf](docs/Hokulele_Manual_en.pdf) (English)
+- **Word 版:** [Hokulele_使用マニュアル.docx](docs/Hokulele_使用マニュアル.docx) (日本語) / [Hokulele_Manual_en.docx](docs/Hokulele_Manual_en.docx) (English)
 
-画面を開いて「Download raw file」(↓ ボタン) でダウンロードしてください。
-Releases の添付ファイル、インストーラ・dmg にも同梱しています。
+PDF・Word 版は、画面を開いて「Download raw file」(↓ ボタン) でダウンロードしてください。
+Word 版は Releases の添付ファイル、インストーラ・dmg にも同梱しています。
 
 ## 分光解析デモ
 
@@ -91,11 +92,12 @@ switch it from the "言語 / Language" menu in the menu bar (takes effect after 
 
 ### User manual
 
-- [Hokulele_Manual_en.docx](docs/Hokulele_Manual_en.docx) (English, Word)
-- [Hokulele_使用マニュアル.docx](docs/Hokulele_使用マニュアル.docx) (Japanese, Word)
+- **Web:** [English](https://nu-sx.github.io/HOKULELE/en.html) / [Japanese](https://nu-sx.github.io/HOKULELE/)
+- **PDF:** [Hokulele_Manual_en.pdf](docs/Hokulele_Manual_en.pdf) (English) / [Hokulele_使用マニュアル.pdf](docs/Hokulele_使用マニュアル.pdf) (Japanese)
+- **Word:** [Hokulele_Manual_en.docx](docs/Hokulele_Manual_en.docx) (English) / [Hokulele_使用マニュアル.docx](docs/Hokulele_使用マニュアル.docx) (Japanese)
 
-Open the file and use "Download raw file" (↓ button). The manuals are also attached to each
-release and included in the installer and the dmg.
+To download a PDF or Word file, open it and use "Download raw file" (↓ button). The Word manuals
+are also attached to each release and included in the installer and the dmg.
 
 ### Spectral analysis demo
 
